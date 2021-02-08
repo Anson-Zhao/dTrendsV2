@@ -4,7 +4,8 @@ define([
     , './csvData'
     , './LayerManager'
     , './covidPK'
-], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
+    , './graphsData'
+], function (newGlobe, dataAll,csvD, LayerManager, covidPK, graphsD) {
     "use strict";
 
     alert ("Please do not click on the app until the globe appears.");
@@ -463,10 +464,11 @@ define([
 
     function createThirdLayers(FirstL, SecondL, ThirdL) {
 
-        //Third Layer for Agrosphere Menu
+        //Third Layer for Agrosphere and Sentinel Menu
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        thirdL = thirdL.replace('()', '');
         let allToggle = thirdL + '-alltoggle';
 
         let panelDefault3 = document.createElement("div");
@@ -481,7 +483,8 @@ define([
 
         let collapsed3 = document.createElement("a");
         collapsed3.className = "collapsed";
-        if (thirdL !== 'Country') {
+        if (thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+        // if (thirdL !== 'Country') {
             collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
             collapsed3.setAttribute("data-toggle", "collapse");
             collapsed3.setAttribute("data-parent", "#nested");
@@ -521,7 +524,8 @@ define([
         panelHeading3.appendChild(panelTitle3);
         panelHeading3.appendChild(checkboxDiv);
         panelDefault3.appendChild(panelHeading3);
-        if (thirdL !== 'Country') {
+        if (thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+        // if (thirdL !== 'Country') {
             panelDefault3.appendChild(nested1c1);
             nested1c1.appendChild(panelBody4);
         }
@@ -534,9 +538,12 @@ define([
         //// document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
 
         // secondLayers.push(panelBody3.id);
-        checkboxLabel.appendChild(checkboxInput);
-        checkboxLabel.appendChild(checkboxSpan);
-        checkboxDiv.appendChild(checkboxLabel);
+
+        if (SecondL !== "Sentinel Satellite Data") {
+            checkboxLabel.appendChild(checkboxInput);
+            checkboxLabel.appendChild(checkboxSpan);
+            checkboxDiv.appendChild(checkboxLabel);
+        }
 
         document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
 
@@ -592,6 +599,7 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        thirdL = thirdL.replace('()', '');
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
@@ -613,7 +621,7 @@ define([
 
         // if (FourthL === 'none') {
 
-            let checkboxAt = document.createTextNode(thirdL + "   ");
+            let checkboxAt = document.createTextNode(thirdL);
             checkboxA.className = "menuWords";
             idname = thirdL
             checkboxA.id = idname + '-atag';
@@ -671,31 +679,37 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        thirdL = thirdL.replace('()', '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
-        if (fourthL !== 'none' && thirdL !== 'Country') {
+        if (fourthL !== 'none' && thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
         let checkboxH4 = document.createElement("h5");
         let checkboxA = document.createElement("a");
-        let idname;
+        let idname = fourthL;
 
         let checkboxLabel = document.createElement("label");
         checkboxLabel.className = "switch right";
 
         let checkboxInput = document.createElement("input");
         checkboxInput.type = "checkbox";
-        checkboxInput.className = "input";
+        checkboxInput.className = "input" + " input-" + ThirdL;
+        checkboxInput.id = idname + '-checkbox';
 
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
 
-            let checkboxAt = document.createTextNode(FourthL + "   ");
-            checkboxA.className = "menuWords";
+            let checkboxAt = document.createTextNode(FourthL + "");
+            if (SecondL === "Sentinel Satellite Data") {
+                checkboxA.className = "menuWords" + " WmsLayer";
+            } else {
+                checkboxA.className = "menuWords";
+            }
             idname = fourthL;
             checkboxA.id = idname + '-atag';
-
+            checkboxA.value = fourthL;
             checkboxInput.value = FourthL;
 
             // if (ThirdL === "Country") {
@@ -717,8 +731,6 @@ define([
             // } else {
             document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
             // }
-
-        } else if(thirdL === 'Country'){
 
         } else {
             alert('Error!');
@@ -1421,6 +1433,8 @@ define([
         let popupBodyItem = $("#popupBody");
         //clears pop-up contents
         popupBodyItem.children().remove();
+        let placeLat = PM.position.latitude;
+        let placeLon = PM.position.longitude;
 
         if(PM.layer.layerType === "Country_Placemarks") {
             //inserts title and discription for placemark
@@ -1474,10 +1488,51 @@ define([
             popupBodyItem.append(button4);
             popupBodyItem.append(br);
 
+
+
+
+
+
+
+
+
+
+
+
+            let dataPoint =
+                graphsD.findDataPoint(csvD.csv1[0], placeLat, placeLon);
+            let details = $("#country");
+            let detailsHTML = '<h4>Country Details</h4>';
+
+            detailsHTML +=
+                '<p>Country: ' + dataPoint.country + '</p>';
+            detailsHTML +=
+                '<p>Country Code: ' + dataPoint.code3 +
+                '</p>';
+            detailsHTML += '<button class="btn-info"><a ' +
+                'href="http://www.fao.org/faostat/en/#data/" ' +
+                'target="_blank">Download Raw Agriculture ' +
+                'Data</a></button>';
+            //Get the agriculture data
+            detailsHTML += graphsD.generateCountryButtons();
+            detailsHTML += '<div id="buttonArea"></div>';
+            details.html(detailsHTML);
+
+            //Give functionality for the buttons generated
+            graphsD.giveCountryButtonsFunctionality(graphsD.agriData, graphsD.priceData,
+                graphsD.liveData, graphsD.emissionAgriData, graphsD.pestiData,
+                graphsD.fertiData, graphsD.yieldData, graphsD.refugeeData, graphsD.agriDef,
+                dataPoint.country);
+
+
+
+
+
+
             let modal = document.getElementById('popupBox');
             let span = document.getElementById('closeIt');
 
-            if (PM.userProperties.country !== 'undefined') {
+            if (PM.userProperties.country !== 'undefined' || PM.userProperties.country !== undefined) {
                 modal.style.display = "block";
 
                 span.onclick = function () {
@@ -1546,7 +1601,7 @@ define([
             let modal = document.getElementById('popupBox');
             let span = document.getElementById('closeIt');
 
-            if (PM.userProperties.country !== 'undefined') {
+            if (PM.userProperties.country !== 'undefined' || PM.userProperties.country !== undefined) {
                 modal.style.display = "block";
 
                 span.onclick = function () {
@@ -1615,7 +1670,7 @@ define([
             let modal = document.getElementById('popupBox');
             let span = document.getElementById('closeIt');
 
-            if (PM.userProperties.dName !== 'undefined') {
+            if (PM.userProperties.dName !== 'undefined' || PM.userProperties.dName !== undefined) {
                 modal.style.display = "block";
 
                 span.onclick = function () {

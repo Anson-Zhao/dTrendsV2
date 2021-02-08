@@ -28,7 +28,7 @@ define([
      * @returns {Array of objects containing the ids and an array of year-
      *          value pairs}
      */
-    function convertArrayToDataSet(csvData) {
+    function convertArrayToDataSet (csvData) {
         //Create the temporary object
         let objectList = [];
         let i = 0;
@@ -90,7 +90,7 @@ define([
         return objectList;
     }
 
-    function findDataBaseName(inputArray, name) {
+    function findDataBaseName (inputArray, name) {
         let i = 0;
         for (i = 0; i < inputArray.length; i++) {
             //Find if the name exists
@@ -103,7 +103,7 @@ define([
         return 0;
     }
 
-    function findDataPoint(dataSet, lat, lon) {
+    let findDataPoint = function (dataSet, lat, lon) {
         for (let i = 0; i < dataSet.length; i++) {
             if ((dataSet[i].lon === lon) && (dataSet[i].lat === lat)) {
                 return dataSet[i];
@@ -118,9 +118,9 @@ define([
      * @param stationName - name of station to get data for
      * @returns {data for specified station}
      */
-    function findDataPointStation(dataSet, stationName) {
+    let findDataPointStation = function (dataSet, stationName) {
         for (let i = 0; i < dataSet.length; i++) {
-            if (dataSet[i].code3 === stationName) {
+            if (dataSet[i].stationName === stationName) {
                 return dataSet[i];
             }
         }
@@ -133,7 +133,7 @@ define([
      * @param cropName - name of crop to get definition for
      * @returns {definition and statement of crop from FAO}
      */
-    function findCropDefinition(dataSet, cropName) {
+    let findCropDefinition = function(dataSet, cropName) {
         for (let i = 0; i < dataSet.length; i++) {
             if (dataSet[i].Item === cropName) {
                 return dataSet[i].Description;
@@ -142,7 +142,7 @@ define([
         return 0;
     }
 
-    function findDataPointCountry(dataSet, countryCode, codeNumber) {
+    let findDataPointCountry = function (dataSet, countryCode, codeNumber) {
         let i = 0;
         if (codeNumber === 2) {
             for (i = 0; i < dataSet.length; i++) {
@@ -172,7 +172,7 @@ define([
      * @param mode - 1 mode means set value to 0 in case of blank
      * @returns {filtered array}
      */
-    function filterOutBlanks(inputData, mode) {
+    let filterOutBlanks = function (inputData, mode) {
         let i = 0;
         let tempArray = [];
         for (i = 0; i < inputData.length; i++) {
@@ -199,7 +199,7 @@ define([
      * @param stationName - name of station
      * @param agriDataPoint - agriculture data to check
      */
-    function giveAtmoButtonsFunctionality(inputData, inputData2, refugeeData, stationName, ccode3,
+    let giveAtmoButtonsFunctionality = function(inputData, inputData2, refugeeData, stationName, ccode3,
                                           agriDataPoint) {
         let dataPoint = findDataPointStation(inputData, stationName);
         let dataPoint2 = findDataPointStation(inputData2, stationName);
@@ -355,7 +355,7 @@ define([
      * @param codeName - country code name
      * @param mode - type of data like agriculture/livestock/fert...
      */
-    function giveDataButtonsFunctionality(detailsHTML, inputData,
+    let giveDataButtonsFunctionality = function (detailsHTML, inputData,
                                           refugeeData,
                                           agriDef, codeName, mode) {
         //Do a search for all the buttons based on the data
@@ -621,7 +621,7 @@ define([
      * Generates the html for the weather search
      * @param countryData - country name for search
      */
-    function generateWeatherHTML(countryData) {
+    let generateWeatherHTML = function (countryData) {
         var weatherHTML = '<h5class="smallerfontsize">Weather Search</h5>';
         weatherHTML += '<p><input type="text" class="form-control" ' +
             'id="cityInput" placeholder="Search for city" title=' +
@@ -645,7 +645,7 @@ define([
     /**
      * Weather search functionality
      */
-    function giveWeatherButtonFunctionality() {
+    let giveWeatherButtonFunctionality= function() {
         var weatherButton = $('#searchWeather').button();
         weatherButton.on('click', function() {
             //Extract the two inputs
@@ -666,9 +666,9 @@ define([
                 dataType: 'json',
                 success: function(data) {
                     //Create some html
-                    var dropArea = $('#searchDetails');
+                    let dropArea = $('#searchDetails');
                     dropArea.html('');
-                    var tempHTML = '<h5 class="fontsize"><b>Weather' +
+                    let tempHTML = '<h5 class="fontsize"><b>Weather' +
                         ' Details for ' + data.name + '</b></h5>';
                     tempHTML += '<p><b>Country:</b> ' + data.sys.country +
                         '</p><br>';
@@ -710,7 +710,7 @@ define([
      * @param stationName - name of station
      * @returns {html string of atmo buttons}
      */
-    function generateAtmoButtons(inputData, inputData2, stationName) {
+    let generateAtmoButtons = function(inputData, inputData2, stationName) {
         var atmoHTML = '<h4>Atmosphere Data</h4>';
         var dataPoint = findDataPointStation(inputData, stationName);
         var dataPoint2 = findDataPointStation(inputData2, stationName);
@@ -768,7 +768,7 @@ define([
      *
      * @returns {html string of buttons}
      */
-    function generateCountryButtons() {
+    let generateCountryButtons = function() {
         var countryHTML = '<h5><b>Available Datasets</b></h5>';
 
         countryHTML += '<button class="btn-info" id="spawnAgri">' +
@@ -801,7 +801,7 @@ define([
      * @param agriDef - agriculture definitions
      * @param codeName - country 3 letter code
      */
-    function giveCountryButtonsFunctionality(agriData, priceData, liveData,
+    let giveCountryButtonsFunctionality = function(agriData, priceData, liveData,
                                              emissionAgriData, pestiData, fertiData,
                                              yieldData, refugeeData, agriDef, codeName) {
         var buttonAreaHTML = $('#buttonArea');
@@ -875,7 +875,7 @@ define([
      * @param mode - which type of data
      * @returns {string containing buttons in HTML}
      */
-    function generateDataButtons(inputData, codeName, mode) {
+    let generateDataButtons = function (inputData, codeName, mode) {
         //Based on the input data, generate the buttons/html
         //Mode dictates what to call the title or search bar
         switch (mode) {
@@ -1029,7 +1029,7 @@ define([
      * @param inputData - data to input
      * @param htmlID - id in html code
      */
-    function createSubPlot(inputData, htmlID) {
+    let createSubPlot = function(inputData, htmlID) {
         //Create subplots
         var i = 0;
         var traces = [];
@@ -1113,7 +1113,7 @@ define([
      * @param htmlID - id in html code
      * @param amount - how many of top types are wanted
      */
-    function plotStack(inputData, htmlID, amount) {
+    let plotStack = function(inputData, htmlID, amount) {
         var i = 0;
         var filteredDataSet = [];
         for (i = 0; i < inputData.dataValues.length; i++) {
@@ -1274,7 +1274,7 @@ define([
      * @param htmlID - id in html file
      * @param mode - 0 = individual plot, otherwise it is a type
      */
-    function plotScatter(titleName, secondName, inputData, htmlID, mode) {
+    let plotScatter = function(titleName, secondName, inputData, htmlID, mode) {
         //Filter the input data, we may get some blanks
         let filteredData = filterOutBlanks(inputData, 0);
         //Blank years gone, create the x-y axis

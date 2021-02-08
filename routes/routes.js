@@ -1,11 +1,27 @@
 // routes/routes.js
 const mysql = require('mysql');
+const path    = require('path');
+const fs = require("fs");
+const fsextra = require('fs-extra');
+const request = require("request");
+
 const serverConfig = require('../config/serverConfig');
-// const geoServer = serverConfig.geoServer;
+const download_interval = serverConfig.download_interval;
+
+const geoServer = serverConfig.geoServer;
+const Download_From = serverConfig.Download_From;
+
+const copySource = path.resolve(__dirname, serverConfig.Download_To); //the path of the source file
+const copyDestDir = path.resolve(__dirname, serverConfig.Backup_Dir);
+
+let downloadFalse = null ;
 
 const con_DT = mysql.createConnection(serverConfig.commondb_connection);
 
 module.exports = function (app) {
+
+    removeFile();
+    setInterval(copyXML, download_interval);
 
     app.get('/', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*"); // Allow cross domain header
@@ -209,4 +225,109 @@ module.exports = function (app) {
             }
         });
     });
+
+    app.get('/position',function (req,res) {
+        res.setHeader("Access-Control-Allow-Origin", "*"); // Allow cross domain header
+        let layername = req.query.layername;
+        let parsedLayers = layername.split(",");
+        // console.log("Parsed Layers: ");
+        // console.log(parsedLayers);
+
+        con_DT.query('SELECT LayerName, Longitude, Latitude, Altitude, ThirdLayer FROM layers WHERE LayerName = ?', parsedLayers[0], function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "no result found!"});
+            } else {
+                res.json(results);
+            }
+        });
+        // con_CS.query("SELECT LayerName, Longitude, Latitude, Altitude, ThirdLayer FROM LayerMenu Where LayerName = ?", parsedLayers[0], function (err, results) {
+        //     console.log (results);
+        //     res.json({"Longitude": results[0].Longitude, "Latitude" : results[0].Latitude, "Altitude" : results[0].Altitude, "ThirdLayer": results[0].ThirdLayer, "LayerName":results[0].LayerName});
+        // })
+    });
+
+    function copyXML(){
+        const today = new Date();//get the current date
+        let date = today.getFullYear()+ '_' +(today.getMonth()+1)+ '_' + today.getDate();
+        let time = today.getHours() + "_" + today.getMinutes()+'_' + today.getSeconds();
+        let dataStr = date + "_"+ time;
+        let copyDest = copyDestDir + '/' + dataStr+ '.xml'; //define a file name
+        fsextra.copy(copySource, copyDest) //copy the file and rename
+            .then(//if copy succeed, call pre-download XML function
+                console.log('copy successful'),
+                predownloadXml ()
+            )
+    }
+
+    function predownloadXml () {
+        const requestOptions = {
+            uri: Download_From,
+            timeout: download_interval - 20000
+        };
+        let resXMLRequest;
+        console.log('predownloadXML was called');
+
+        request.get(requestOptions)
+            .on('error',function(err){ //called when error
+                console.log(err.code);
+                console.log('predownloadXML error');
+                removeFile();
+                // process.exit(0)
+            })
+            .on('response', function (res) {
+                resXMLRequest = res;
+                if (res.statusCode === 200){
+                    res.pipe(fs.createWriteStream(copySource));
+                    console.log('download starting');
+                } else {
+                    console.log("Respose with Error Code: " + res.statusCode);
+                    removeFile();
+                    // process.exit(0)
+                }
+            })
+            .on('end', function () {
+                downloadFalse = false;
+                console.log("The End: " + resXMLRequest.statusCode);
+                removeFile();
+                // process.exit(0)
+            })
+    }
+
+    function removeFile() {
+
+        console.log('the remove function was called at: ' + copyDestDir);
+
+        fs.readdir(copyDestDir, (err, files) => {//a method to calculate the number of the files in the geoCapacity folder
+
+            // if(files.length > num_backups){
+            //
+            //     //if there are more than 100 file in the directory
+            //     if(!downloadFalse){ //if download succeed, run the code below
+            //         fs.unlink(copyDestDir + "/" + files[0], (err) => { //delete the first (the oldest) file in the directory
+            //             if (err) {throw err} else {
+            //                 downloadFalse = true; //change the value of "downloadFalse" to true
+            //             }
+            //             console.log('download and remove copy successfully');
+            //         })
+            //     } else { //if download failed, run the code below
+            //         fs.unlink(copyDestDir + "/" + files[files.length-1], (err) => { //then delete the last (the latest) file in the directory
+            //             if (err) {throw err}
+            //             console.log('download file failed, removed copy successfully')
+            //         })
+            //     }
+            // }else {
+            //     //if the file number is less than num_backups, and download failed
+            //     if (files.length > 0) {
+            //         if (downloadFalse === null) {
+            //             fs.unlink(copyDestDir + "/" + files[files.length - 1], (err) => { //then delete the last (the latest) file in the directory
+            //                 if (err) throw err;
+            //                 console.log('download file failed,number is less than num_backups, removed copy successfully')
+            //             })
+            //         }
+            //     }
+            // }
+        });
+    }
+
 };
