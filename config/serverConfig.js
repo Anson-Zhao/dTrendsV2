@@ -35,6 +35,8 @@ let serverConfig = {
     },
     Session_db: 'dtrends',
     Upload_db: 'dtrends',
+    Login_db: 'dtrends',
+
 
     Server_Port: 9091,
 

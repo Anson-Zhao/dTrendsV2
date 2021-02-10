@@ -1,8 +1,10 @@
 // routes/routes.js
 const mysql = require('mysql');
 const path    = require('path');
+const bodyParser = require('body-parser');
 const fs = require("fs");
 const fsextra = require('fs-extra');
+const cors = require('cors');
 const request = require("request");
 
 const serverConfig = require('../config/serverConfig');
@@ -18,10 +20,20 @@ let downloadFalse = null ;
 
 const con_DT = mysql.createConnection(serverConfig.commondb_connection);
 
+con_DT.query('USE ' + serverConfig.Login_db); // Locate Login DB
+
 module.exports = function (app) {
 
     removeFile();
     setInterval(copyXML, download_interval);
+
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.json());
+    app.use(cors({
+        origin: '*',
+        credentials: true
+    }));
+
 
     app.get('/', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*"); // Allow cross domain header
@@ -233,7 +245,7 @@ module.exports = function (app) {
         // console.log("Parsed Layers: ");
         // console.log(parsedLayers);
 
-        con_DT.query('SELECT LayerName, Longitude, Latitude, Altitude, ThirdLayer FROM layers WHERE LayerName = ?', parsedLayers[0], function (err, results) {
+        con_DT.query('SELECT LayerName, Longitude, Latitude FROM LayerMenu WHERE LayerName = ?', parsedLayers[0], function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "no result found!"});
