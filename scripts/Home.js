@@ -1149,8 +1149,8 @@ requirejs([
             success: function (results) {
                 console.log(results)
                 layerSelected = results[0];
-                Altitude = layerSelected.Altitude * 1000;
-                newGlobe.goTo(new WorldWind.Position(layerSelected.Latitude, layerSelected.Longitude, Altitude));
+                // Altitude = layerSelected.Altitude * 1000;
+                newGlobe.goTo(new WorldWind.Position(layerSelected.Latitude, layerSelected.Longitude, null));
 
                 // console.log('globePosition');
             }
@@ -1185,7 +1185,7 @@ requirejs([
                 newGlobe.layers[findLayerIndex].enabled = status;
                 newGlobe.redraw();
 
-                let layerRequest =  countryN;
+                let layerRequest =  "layername=" + countryN;
                 globePosition(layerRequest);
             }
         } else {
