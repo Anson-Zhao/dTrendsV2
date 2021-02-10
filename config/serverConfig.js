@@ -42,7 +42,7 @@ let serverConfig = {
     // local_URL : "http://viewer.usgs.aworldbridgelabs.com",
 
     //upload path to geoserver when approved
-    geoServer : 'http://cs.aworldbridgelabs.com:8080/geoserver/',
+    geoServer : 'https://cors.aworldbridgelabs.com:9084/http://cs.aworldbridgelabs.com:8080/geoserver/',
     // geoServer : 'http://10.11.90.16:8080/geoserver/',
 
     //sysnchronization between approvedfolder and data folder under geoserver when approved
