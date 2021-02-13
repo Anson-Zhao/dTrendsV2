@@ -42,6 +42,8 @@ module.exports = function (app) {
         })
     });
 
+    app.get('/reDownload', () => predownloadXml());
+
     // let firstDate, lastSecondDate;
     app.get('/validateDate', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");

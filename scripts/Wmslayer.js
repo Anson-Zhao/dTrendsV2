@@ -79,14 +79,15 @@ requirejs([
 
     // Called if an error occurs during WMS Capabilities document retrieval
     function logError (jqXhr, text, exception) {
-        secondDownload = !secondDownload;
+        // secondDownload = !secondDownload;
         console.log("There was a failure retrieving the capabilities document: " + text + " exception: " + exception);
 
         if (secondDownload) {
             $.get(serviceAddress2).done(createWMSLayer).fail(logError);
-            $.get('/reDownload');
+            // $.get('/reDownload');
         } else {
-            $.get(serviceAddress1).done(createWMSLayer).fail(logError);
+        console.log("Failed to load WMS...")
+            // $.get(serviceAddress1).done(createWMSLayer).fail(logError);
         }
     }
 
