@@ -59,12 +59,13 @@ requirejs([
                 let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
 
                 // Modify the configuration objects title property to a more user friendly title
-                if (!wmsLayerCapability) return true;
+                if (!wmsConfig) return true;
                 wmsConfig.title = preloadWmsLayers[i];
 
                 // Create the WMS Layer from the configuration object
                 let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
                 wmsLayer.enabled = false;
+                wmsLayer.layerType = "WmsLayer";
 
                 // Add the layers to WorldWind and update the layer manager
                 newGlobe.addLayer(wmsLayer);
@@ -75,15 +76,15 @@ requirejs([
 
     // Called if an error occurs during WMS Capabilities document retrieval
     function logError (jqXhr, text, exception) {
-        // secondDownload = !secondDownload;
+        secondDownload = !secondDownload;
         console.log("There was a failure retrieving the capabilities document: " + text + " exception: " + exception);
 
         if (secondDownload) {
             $.get(serviceAddress2).done(createWMSLayer).fail(logError);
-            // $.get('/reDownload');
+            $.get('/reDownload');
         } else {
         console.log("Failed to load WMS...")
-            // $.get(serviceAddress1).done(createWMSLayer).fail(logError);
+            $.get(serviceAddress1).done(createWMSLayer).fail(logError);
         }
     }
 

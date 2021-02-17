@@ -46,8 +46,7 @@ module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*"); // Allow cross domain header
         // res.render('homepage.ejs');
-        res.render('homepage.ejs', {
-        })
+        res.render('homepage.ejs')
     });
 
     app.get('/validateDate', function (req, res) {
