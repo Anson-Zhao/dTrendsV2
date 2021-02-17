@@ -21,7 +21,8 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
-    let date1 = dataAll.arrDate[0];
+    // let date1 = dataAll.arrDate[0];
+    let date1 = dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
     if (date1 !== undefined && date2 !== undefined) {
