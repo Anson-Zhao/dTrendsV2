@@ -70,10 +70,6 @@ requirejs([
                 newGlobe.addLayer(wmsLayer);
             }
 
-
-
-
-
         });
     }
 
