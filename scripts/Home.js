@@ -1185,8 +1185,10 @@ requirejs([
                 newGlobe.layers[findLayerIndex].enabled = status;
                 newGlobe.redraw();
 
-                let layerRequest =  "layername=" + countryN;
+                let layerRequest = "layername=" + countryN;
                 globePosition(layerRequest);
+            } else {
+                console.log("Layer not found!")
             }
         } else {
             alert('Error!');

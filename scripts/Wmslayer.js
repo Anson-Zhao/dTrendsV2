@@ -59,20 +59,17 @@ requirejs([
                 let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
 
                 // Modify the configuration objects title property to a more user friendly title
-                if (!wmsLayerCapability) return true;
+                if (!wmsConfig) return true;
                 wmsConfig.title = preloadWmsLayers[i];
 
                 // Create the WMS Layer from the configuration object
                 let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
                 wmsLayer.enabled = false;
+                wmsLayer.layerType = "WmsLayer";
 
                 // Add the layers to WorldWind and update the layer manager
                 newGlobe.addLayer(wmsLayer);
             }
-
-
-
-
 
         });
     }
@@ -86,6 +83,7 @@ requirejs([
             $.get(serviceAddress2).done(createWMSLayer).fail(logError);
             $.get('/reDownload');
         } else {
+        console.log("Failed to load WMS...")
             $.get(serviceAddress1).done(createWMSLayer).fail(logError);
         }
     }
