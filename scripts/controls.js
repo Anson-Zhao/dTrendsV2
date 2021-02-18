@@ -682,7 +682,7 @@ define([
         thirdL = thirdL.replace('()', '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
-        if (fourthL !== 'none' && thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+        if (fourthL !== 'none' && thirdL !== 'Country' && thirdL !== 'Agriculture' && thirdL !== 'False Color (Urban)' && thirdL !== 'False Color (Vegetation)' && thirdL !== 'Geology' && thirdL !== 'Natural Color (True Color)') {
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
@@ -1259,7 +1259,8 @@ define([
                     //creates placemarks based on range selected
                     if (speed) {
                         console.log("fast");
-                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        // covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        covidPK([$('#foFrom').val(), $('#foTo').val()]);
                     }
 
                     //ensures date slider is shown and range slider is hidden; edit mode is closed
@@ -1310,7 +1311,8 @@ define([
                     //creates placemarks based on range selected
                     if (speed) {
                         // console.log("fast");
-                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        // covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        covidPK([$('#foFrom').val(), $('#foTo').val()]);
                     }
 
                     $(this).dialog("close");

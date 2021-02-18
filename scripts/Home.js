@@ -1150,7 +1150,7 @@ requirejs([
             success: function (results) {
                 console.log(results)
                 layerSelected = results[0];
-                Altitude = layerSelected.Altitude * 1000;
+                Altitude = layerSelected.Altitude * 5000;
                 newGlobe.goTo(new WorldWind.Position(layerSelected.Latitude, layerSelected.Longitude, Altitude));
 
                 // console.log('globePosition');

@@ -19,7 +19,8 @@ define([
         $.ajax({
             url: '/1dData',
             type: 'GET',
-            data: {date: date, countries: countries, continents: continents},
+            // data: {date: date, countries: countries, continents: continents},
+            data: {date: date},
             dataType: 'json',
             async: false,
             success: function (resp) {

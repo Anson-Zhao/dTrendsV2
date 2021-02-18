@@ -71,6 +71,7 @@ module.exports = function (app, passport) {
         console.log("function")
         res.setHeader("Access-Control-Allow-Origin", "*");
 
+        // let countryQ = "select * from dtrends.continent where CountryName= ?";
         let countryQ = "select Latitude, Longitude from dtrends.continent where CountryName= ?";
         con_DT.query(countryQ, [req.query.country], function (err, results) {
             if (err) {
@@ -86,7 +87,8 @@ module.exports = function (app, passport) {
     app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        let oneDaysQ = "select CountryName, ContinentName, Latitude, Longitude, CaseNum, DeathNum, RecovNum, DisplayName, Date, from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
+        let oneDaysQ = "select * from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
+        // let oneDaysQ = "select CountryName, ContinentName, Latitude, Longitude, CaseNum, DeathNum, RecovNum, DisplayName, Date, from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
         con_DT.query(oneDaysQ, [req.query.date[0], req.query.date[1]], function (err, results) {
             if (err) {
                 console.log(err);
@@ -185,22 +187,22 @@ module.exports = function (app, passport) {
     //     });
     // });
 
-    // app.get('/allLayers', function (req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //
-    //     // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
-    //     let statAll = "SELECT LayerType, DisplayName, Color_Confirmed, Date From dtrends.covid_19;";
-    //
-    //     con_DT.query(statAll, function (err, results) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.json({"error": true, "message": "An unexpected error occurred !"});
-    //         } else {
-    //             // console.log(results);
-    //             res.json({"error": false, "data": results});
-    //         }
-    //     });
-    // });
+    app.get('/allLayers', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
+        let statAll = "SELECT LayerType, DisplayName, Color_Confirmed, Date From dtrends.covid_19;";
+
+        con_DT.query(statAll, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                // console.log(results);
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
 
     app.get('/chartData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -209,6 +211,7 @@ module.exports = function (app, passport) {
         let dFrom = req.query.dateFrom;
 
         // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
+        // let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;"
         let statAll = "SELECT Date, DeathNum, RecovNum, ActiveNum From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;";
 
         con_DT.query(statAll, function (err, results) {
