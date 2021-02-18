@@ -99,7 +99,7 @@ define([
         const a = layers.findIndex(ele => ele.displayName === layerName)
         if (!layers[a].hide) {
 
-            if (layers[a].displayName === layerName && layers[a].layerType == "H_PKLayer") {
+            if (layers[a].displayName === layerName && layers[a].layerType === "H_PKLayer") {
                 layers[a].enabled = !layers[a].enabled;
                 $.ajax({
                     url: '/rr',
