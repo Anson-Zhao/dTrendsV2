@@ -87,8 +87,8 @@ module.exports = function (app, passport) {
     app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        let oneDaysQ = "select * from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
-        // let oneDaysQ = "select CountryName, ContinentName, Latitude, Longitude, CaseNum, DeathNum, RecovNum, DisplayName, Date, from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
+        // let oneDaysQ = "select * from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
+        let oneDaysQ = "select Date, LayerName, DisplayName, CaseNum, DeathNum, RecovNum, ActiveNum, Latitude, Longitude, CountryName, ContinentName, Color_Confirmed, Color_Death, Color_Recovered from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
         con_DT.query(oneDaysQ, [req.query.date[0], req.query.date[1]], function (err, results) {
             if (err) {
                 console.log(err);
@@ -211,8 +211,8 @@ module.exports = function (app, passport) {
         let dFrom = req.query.dateFrom;
 
         // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
-        // let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;"
-        let statAll = "SELECT Date, DeathNum, RecovNum, ActiveNum From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;";
+        let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;"
+        // let statAll = "SELECT Date, DeathNum, RecovNum, ActiveNum From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;";
 
         con_DT.query(statAll, function (err, results) {
             if (err) {
