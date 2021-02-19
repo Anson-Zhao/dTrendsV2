@@ -772,6 +772,7 @@ requirejs([
             // let toggle = this;
             if (this.checked && coviderror !== true) {
                 document.getElementById("COVID-category").disabled = false;
+
                 document.getElementById("datesliderdiv").hidden = false;
 
                 document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
@@ -794,6 +795,7 @@ requirejs([
                 this.checked = false;
             } else {
                 document.getElementById("COVID-category").disabled = true;
+
                 document.getElementById("datesliderdiv").hidden = true;
                 document.getElementById("drawingtools-tab").style.pointerEvents = 'none';
                 document.getElementById("diseasetrends-tab").style.pointerEvents = 'none';
@@ -809,6 +811,8 @@ requirejs([
                 // document.getElementById("continentList").visibility = "hidden";
             }
         });
+
+
 
         $("#FoodSecurity-Agrosphere-Country-a").click(function () {
             let toggle = document.getElementById("Country-alltoggle");
