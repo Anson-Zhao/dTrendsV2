@@ -26,9 +26,6 @@ requirejs([
             preloadWmsLayers[i] = $(this).val();
             let parsed = preloadWmsLayers[i].split(",");
 
-            console.log(preloadWmsLayers[i]);
-            console.log(parsed);
-
             if (parsed.length > 1) {
                 for (let j = 0; j < parsed.length; j++) {
                     if (!parsed[j]) return true;

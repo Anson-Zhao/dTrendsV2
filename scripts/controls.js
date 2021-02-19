@@ -471,10 +471,6 @@ define([
         thirdL = thirdL.replace('()', '');
         let allToggle = thirdL + '-alltoggle';
 
-        let panelDefault3 = document.createElement("div");
-        panelDefault3.id = thirdL;
-        panelDefault3.className = "Menu panel panel-info " + thirdL + " " + secondL + " " + firstL + "-" + secondL + " " + firstL + "-" + secondL + "-" + thirdL;
-
         let panelHeading3 = document.createElement("div");
         panelHeading3.className = "panel-heading " + firstL + "-" + secondL + "-" + thirdL;
 
@@ -482,12 +478,24 @@ define([
         panelTitle3.className = "panel-title " + firstL + "-" + secondL + "-" + thirdL;
 
         let collapsed3 = document.createElement("a");
-        collapsed3.className = "collapsed";
-        if (thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+
+        let panelDefault3 = document.createElement("div");
+        panelDefault3.id = thirdL;
+
+        if (thirdL !== 'Country' && thirdL !== 'Agriculture' && ThirdL !== 'False Color (Urban)' && ThirdL !== 'False Color (Vegetation)' && thirdL !== 'Geology' && ThirdL !== 'Natural Color (True Color)') {
         // if (thirdL !== 'Country') {
+            collapsed3.className = "collapsed";
             collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
             collapsed3.setAttribute("data-toggle", "collapse");
             collapsed3.setAttribute("data-parent", "#nested");
+            panelDefault3.className = "Menu panel panel-info " + thirdL + " " + secondL + " " + firstL + "-" + secondL + " " + firstL + "-" + secondL + "-" + thirdL;
+        } else if (SecondL === "Sentinel Satellite Data") {
+        // } else if (thirdL == 'Agriculture' && thirdL == 'False Color (Urban)' && thirdL == 'False Color (Vegetation)' && thirdL == 'Geology' && thirdL == 'Natural Color (True Color)') {
+            collapsed3.className = "collapsed disabled-link";
+            panelDefault3.className = "Menu panel disabled-menu " + thirdL + " " + secondL + " " + firstL + "-" + secondL + " " + firstL + "-" + secondL + "-" + thirdL;
+        } else {
+            collapsed3.className = "collapsed";
+            panelDefault3.className = "Menu panel panel-info " + thirdL + " " + secondL + " " + firstL + "-" + secondL + " " + firstL + "-" + secondL + "-" + thirdL;
         }
         collapsed3.id = firstL + "-" + secondL + "-" + thirdL + '-a';
 
@@ -528,6 +536,8 @@ define([
         // if (thirdL !== 'Country') {
             panelDefault3.appendChild(nested1c1);
             nested1c1.appendChild(panelBody4);
+        } else if (SecondL === "Sentinel Satellite Data") {
+
         }
         //// checkboxA.appendChild(checkboxAt);
         //// checkboxH4.appendChild(checkboxA);
@@ -682,7 +692,7 @@ define([
         thirdL = thirdL.replace('()', '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
-        if (fourthL !== 'none' && thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+        if (fourthL !== 'none' && thirdL !== 'Country' && thirdL !== 'Agriculture' && thirdL !== 'False Color (Urban)' && thirdL !== 'False Color (Vegetation)' && thirdL !== 'Geology' && thirdL !== 'Natural Color (True Color)') {
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
@@ -1259,7 +1269,8 @@ define([
                     //creates placemarks based on range selected
                     if (speed) {
                         console.log("fast");
-                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        // covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        covidPK([$('#foFrom').val(), $('#foTo').val()]);
                     }
 
                     //ensures date slider is shown and range slider is hidden; edit mode is closed
@@ -1310,7 +1321,8 @@ define([
                     //creates placemarks based on range selected
                     if (speed) {
                         // console.log("fast");
-                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        // covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        covidPK([$('#foFrom').val(), $('#foTo').val()]);
                     }
 
                     $(this).dialog("close");

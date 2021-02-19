@@ -33,17 +33,30 @@ requirejs([
     let layerSelected, Altitude;
     let j = 0;
 
+    // Alphabetical Ordered
+    // const satellite_data = [
+    //     "Agriculture",
+    //     "False Color (Urban)",
+    //     "False Color (Vegetation)",
+    //     "Geology",
+    //     "Moisture Index",
+    //     "Natural Color (True Color)",
+    //     "NDVI",
+    //     "NDMI",
+    //     "NDWI",
+    //     "SWIR"
+    // ]
     const satellite_data = [
-        "Agriculture",
-        "False Color (Urban)",
-        "False Color (Vegetation)",
-        "Geology",
         "Moisture Index",
-        "Natural Color (True Color)",
         "NDVI",
         "NDMI",
         "NDWI",
-        "SWIR"
+        "SWIR",
+        "Agriculture",
+        "False Color (Urban)",
+        "False Color (Vegetation)",
+        "Natural Color (True Color)",
+        "Geology"
     ]
     const NDMI = ['Covid19_SH:ET_NDMI_Sent2_L1C']
     const NDVI = ["Covid19_SH:ET_NDVI2",'Covid19_SH:ET_NDVI_Sent2_L1C']
