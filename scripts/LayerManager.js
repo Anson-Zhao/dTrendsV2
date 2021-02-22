@@ -281,20 +281,22 @@ define([
             "Daily Vaccinations",
             "Daily Vaccinations/million"
         ]
-        let dropdownVaccinations = $("#categoryListVaccinations"),
-            dropdownButtonV = $('<button class="btn btn-info btn-block dropdown-toggle" id="vaccine-category" type="button" data-toggle="dropdown">Global Vaccinations<span class="caret"></span></button>');
+        let projectionDropdown = $("#categoryListVaccinations");
 
-            dropdownVaccinations.append(dropdownButtonV);
-            dropdownVaccinations.find("button").css("background-color", "blue");
-            let ulItem = $('<ul class="dropdown-menu">');
-            dropdownVaccinations.append(ulItem);
-            for (let i = 0; i < Vaccinations.length; i++) {
-                let projectionItem = $('<li><a>' + Vaccinations[i] + '</a></li>');
-                ulItem.append(projectionItem);
-            }
+        let dropdownButton = $('<button class="btn btn-info btn-block dropdown-toggle" id="vaccine-category" type="button" data-toggle="dropdown">Global Vaccinations<span class="caret"></span></button>');
+        projectionDropdown.append(dropdownButton);
+        projectionDropdown.find("button").css("background-color", "blue");
+        let ulItem = $('<ul class="dropdown-menu">');
+        projectionDropdown.append(ulItem);
 
-            ulItem = $('</ul>');
-            dropdownVaccinations.append(ulItem);
+        for (let i = 0; i < Vaccinations.length; i++) {
+            let projectionItem = $('<li><a>' + Vaccinations[i] + '</a></li>');
+            ulItem.append(projectionItem);
+        }
+
+        ulItem = $('</ul>');
+        console.log(ulItem);
+        projectionDropdown.append(ulItem);
     }
 
     LayerManager.prototype.diseaseList = function () {

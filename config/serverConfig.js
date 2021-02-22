@@ -3,8 +3,8 @@ let serverConfig = {
     commondb_connection: {
         'multipleStatements': true,
         'connectionLimit' : 100,
-        'host': 'localhost',
-        // 'host': '10.11.90.16',
+        // 'host': 'localhost',
+        'host': '10.11.90.16',
         'user': 'AppUser',
         'password': 'Special888%',
         'port'    :  3306
@@ -12,8 +12,8 @@ let serverConfig = {
     session_connection: {
         'multipleStatements': true,
         'connectionLimit' : 100,
-        'host': 'localhost',
-        // 'host': '10.11.90.16',
+        // 'host': 'localhost',
+        'host': '10.11.90.16',
         'user': 'AppUser',
         'password': 'Special888%',
         'port'    :  3306

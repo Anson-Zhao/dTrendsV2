@@ -11113,33 +11113,6 @@ The NHD is a national framework for assigning reach addresses to water-related e
         </Style>
       </Layer>
       <Layer queryable="1" opaque="0">
-        <Name>City_Smart:Kodiak_Cables_With_Guy_Cable_Support</Name>
-        <Title>Kodiak_Cables_With_Guy_Cable_Support</Title>
-        <Abstract/>
-        <KeywordList>
-          <Keyword>features</Keyword>
-          <Keyword>GUY_line</Keyword>
-        </KeywordList>
-        <CRS>EPSG:4326</CRS>
-        <CRS>CRS:84</CRS>
-        <EX_GeographicBoundingBox>
-          <westBoundLongitude>-152.8931581521974</westBoundLongitude>
-          <eastBoundLongitude>-152.18861212875552</eastBoundLongitude>
-          <southBoundLatitude>57.44129166240881</southBoundLatitude>
-          <northBoundLatitude>57.88178284879661</northBoundLatitude>
-        </EX_GeographicBoundingBox>
-        <BoundingBox CRS="CRS:84" minx="-152.8931581521974" miny="57.44129166240881" maxx="-152.18861212875552" maxy="57.88178284879661"/>
-        <BoundingBox CRS="EPSG:4326" minx="57.44129166240881" miny="-152.8931581521974" maxx="57.88178284879661" maxy="-152.18861212875552"/>
-        <Style>
-          <Name>Light Coral Red Line</Name>
-          <Title>A red line style</Title>
-          <LegendURL width="20" height="20">
-            <Format>image/png</Format>
-            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://cs.aworldbridgelabs.com:8080/geoserver/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=City_Smart%3AKodiak_Cables_With_Guy_Cable_Support"/>
-          </LegendURL>
-        </Style>
-      </Layer>
-      <Layer queryable="1" opaque="0">
         <Name>City_Smart:Kodiak_Large_Transformers</Name>
         <Title>Kodiak_Large_Transformers</Title>
         <Abstract/>
@@ -11163,6 +11136,33 @@ The NHD is a national framework for assigning reach addresses to water-related e
           <LegendURL width="20" height="20">
             <Format>image/png</Format>
             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://cs.aworldbridgelabs.com:8080/geoserver/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=City_Smart%3AKodiak_Large_Transformers"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>City_Smart:Kodiak_Poles_with_Guy_Cable_Support</Name>
+        <Title>Kodiak_Poles_with_Guy_Cable_Support</Title>
+        <Abstract/>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>GUY_line</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-152.8931581521974</westBoundLongitude>
+          <eastBoundLongitude>-152.18861212875552</eastBoundLongitude>
+          <southBoundLatitude>57.44129166240881</southBoundLatitude>
+          <northBoundLatitude>57.88178284879661</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-152.8931581521974" miny="57.44129166240881" maxx="-152.18861212875552" maxy="57.88178284879661"/>
+        <BoundingBox CRS="EPSG:4326" minx="57.44129166240881" miny="-152.8931581521974" maxx="57.88178284879661" maxy="-152.18861212875552"/>
+        <Style>
+          <Name>Light Coral Red Line</Name>
+          <Title>A red line style</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://cs.aworldbridgelabs.com:8080/geoserver/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=City_Smart%3AKodiak_Poles_with_Guy_Cable_Support"/>
           </LegendURL>
         </Style>
       </Layer>

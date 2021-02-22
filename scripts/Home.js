@@ -60,6 +60,7 @@ requirejs([
     const dataTypes = ['Country', 'Weather Station'];
     let countryL = [];
     let coviderror;
+    let vaccineerror;
     let layerSelected, Altitude;
     let j = 0;
 
@@ -773,7 +774,6 @@ requirejs([
             // let toggle = this;
             if (this.checked && coviderror !== true) {
                 document.getElementById("COVID-category").disabled = false;
-
                 document.getElementById("datesliderdiv").hidden = false;
 
                 document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
@@ -813,7 +813,22 @@ requirejs([
             }
         });
 
+        $("#GlobalVaccinations-checkbox").on("click",function(){
+            console.log("asdf");
+            if (this.checked && vaccineerror !== true){
+                console.log("clicked");
+                console.log($("#vaccine-category"));
+                console.log($("#categoryListVaccinations"));
+                document.getElementById("vaccine-category").disabled = false;
 
+            }
+            else{
+                console.log("closed");
+                document.getElementById("vaccine-category").disabled = true;
+
+            }
+
+        })
 
         $("#FoodSecurity-Agrosphere-Country-a").click(function () {
             let toggle = document.getElementById("Country-alltoggle");
@@ -953,6 +968,7 @@ requirejs([
         layerManager.synchronizeLayerList();
         layerManager.continentList();
         layerManager.categoryList();
+        layerManager.categoryListVaccine();
 
         //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
         fromDateH.val(dataAll.arrDate[0].Date);
