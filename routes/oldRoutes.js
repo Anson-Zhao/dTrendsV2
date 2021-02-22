@@ -1,34 +1,31 @@
-// routes/routes.js
+// routes/oldRoutes.js
 const mysql = require('mysql');
+const path    = require('path');
 const bodyParser = require('body-parser');
-const serverConfig = require('../config/serverConfig');
 const fs = require("fs");
 const fsextra = require('fs-extra');
-const request = require("request");
 const cors = require('cors');
-const path    = require('path');
-const rateLimit = require("express-rate-limit");
-const Download_From = serverConfig.Download_From;
+const request = require("request");
+
+const serverConfig = require('../config/serverConfig');
+const download_interval = serverConfig.download_interval;
+
 const geoServer = serverConfig.geoServer;
+const Download_From = serverConfig.Download_From;
 
 const copySource = path.resolve(__dirname, serverConfig.Download_To); //the path of the source file
 const copyDestDir = path.resolve(__dirname, serverConfig.Backup_Dir);
-const download_interval = serverConfig.download_interval;
+
+let downloadFalse = null ;
 
 const con_DT = mysql.createConnection(serverConfig.commondb_connection);
 
 con_DT.query('USE ' + serverConfig.Login_db); // Locate Login DB
-const Limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100,
-});
 
-let downloadFalse = null ;
-
-module.exports = function (app, passport) {
+module.exports = function (app) {
 
     removeFile();
-    setInterval(copyXML, download_interval); // run the function one time a (day
+    setInterval(copyXML, download_interval);
 
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
@@ -37,18 +34,17 @@ module.exports = function (app, passport) {
         credentials: true
     }));
 
-    app.use(Limiter);
-
-    // =====================================
-    // CS APP Home Section =================
-    // =====================================
 
     app.get('/', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*"); // Allow cross domain header
         // res.render('homepage.ejs');
-        res.render('homepage.ejs')
+        res.render('homepage.ejs', {
+        })
     });
 
+    app.get('/reDownload', () => predownloadXml());
+
+    // let firstDate, lastSecondDate;
     app.get('/validateDate', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -71,8 +67,7 @@ module.exports = function (app, passport) {
         console.log("function")
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        // let countryQ = "select * from dtrends.continent where CountryName= ?";
-        let countryQ = "select Latitude, Longitude from dtrends.continent where CountryName= ?";
+        let countryQ = "select * from dtrends.continent where CountryName= ?";
         con_DT.query(countryQ, [req.query.country], function (err, results) {
             if (err) {
                 console.log(err);
@@ -87,8 +82,7 @@ module.exports = function (app, passport) {
     app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        // let oneDaysQ = "select * from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
-        let oneDaysQ = "select Date, LayerName, DisplayName, CaseNum, DeathNum, RecovNum, ActiveNum, Latitude, Longitude, CountryName, ContinentName, Color_Confirmed, Color_Death, Color_Recovered from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
+        let oneDaysQ = "select * from dtrends.covid_19 where Date >= ? AND Date <= ? order by CountryName, Date;";
         con_DT.query(oneDaysQ, [req.query.date[0], req.query.date[1]], function (err, results) {
             if (err) {
                 console.log(err);
@@ -100,47 +94,47 @@ module.exports = function (app, passport) {
         });
     });
 
-    // app.get('/majorData', function (req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //
-    //     let majorQ = "select * from dtrends.covid_19 where Date < ? order by CountryName, Date";
-    //     con_DT.query(majorQ, req.query.Date, function (err, results) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.json({"error": true, "message": "An unexpected error occurred !"});
-    //         } else {
-    //             res.json({"error": false, "data": results});
-    //         }
-    //     });
-    // });
+    app.get('/majorData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
 
-    // app.get('/lastData', function (req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //
-    //     let lastQ = "select * from dtrends.covid_19 where Date = ? order by CountryName, Date";
-    //     con_DT.query(lastQ, req.query.Date, function (err, results) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.json({"error": true, "message": "An unexpected error occurred !"});
-    //         } else {
-    //             res.json({"error": false, "data": results});
-    //         }
-    //     });
-    // });
+        let majorQ = "select * from dtrends.covid_19 where Date < ? order by CountryName, Date";
+        con_DT.query(majorQ, req.query.Date, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
 
-    // app.get('/allData', function (req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //
-    //     let allQ = "select * from dtrends.covid_19 order by CountryName, Date";
-    //     con_DT.query(allQ, function (err, results) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.json({"error": true, "message": "An unexpected error occurred !"});
-    //         } else {
-    //             res.json({"error": false, "data": results});
-    //         }
-    //     });
-    // });
+    app.get('/lastData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        let lastQ = "select * from dtrends.covid_19 where Date = ? order by CountryName, Date";
+        con_DT.query(lastQ, req.query.Date, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
+
+    app.get('/allData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        let allQ = "select * from dtrends.covid_19 order by CountryName, Date";
+        con_DT.query(allQ, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
 
     app.get('/timelapseAll', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -172,20 +166,20 @@ module.exports = function (app, passport) {
         });
     });
 
-    // app.post('/byCountry', function (req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //     // console.log(req.body);
-    //
-    //     let pkQ = "select * from dtrends.covid_19 where CountryName = ?;";
-    //     con_DT.query(pkQ, req.body.country, function (err, results) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.json({"error": true, "message": "An unexpected error occurred !"});
-    //         } else {
-    //             res.json({"error": false, "data": results});
-    //         }
-    //     });
-    // });
+    app.post('/byCountry', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        // console.log(req.body);
+
+        let pkQ = "select * from dtrends.covid_19 where CountryName = ?;";
+        con_DT.query(pkQ, req.body.country, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
 
     app.get('/allLayers', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -211,8 +205,7 @@ module.exports = function (app, passport) {
         let dFrom = req.query.dateFrom;
 
         // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
-        let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;"
-        // let statAll = "SELECT Date, DeathNum, RecovNum, ActiveNum From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;";
+        let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;";
 
         con_DT.query(statAll, function (err, results) {
             if (err) {
@@ -224,28 +217,28 @@ module.exports = function (app, passport) {
         });
     });
 
-    // app.get('/allLayerMenu', function (req, res) {
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //
-    //     // let stat1 = "SELECT CaseNum, LayerType, FirstLayer, SecondLayer, DisplayName, Latitude, Longitude, CityName, StateName, CountryName, ContinentName, RID, Color_Confirmed FROM dtrends.covid_19 WHERE SUBSTRING(RID, 1, 10)= '" + controlDate + "' GROUP BY DisplayName;";
-    //     let stat1 = "SELECT CaseNum, LayerType, FirstLayer, SecondLayer, DisplayName, Latitude, Longitude," +
-    //         " CityName, StateName, CountryName, ContinentName, RID, Color_Confirmed FROM dtrends.covid_19 " +
-    //         "WHERE Date= '" + req.query.RID + "' GROUP BY DisplayName;";
-    //     let stat2 = "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));";
-    //     // let stat3 = "SELECT SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
-    //     let stat3 = "SELECT Date From dtrends.covid_19;";
-    //     let stat4 = stat2 + stat1 + stat3;
-    //
-    //     con_DT.query(stat4, function (err, results) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.json({"error": true, "message": "An unexpected error occurred !"});
-    //         } else {
-    //             // console.log(results[1]);
-    //             res.json({"error": false, "data": results[1]});
-    //         }
-    //     });
-    // });
+    app.get('/allLayerMenu', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        // let stat1 = "SELECT CaseNum, LayerType, FirstLayer, SecondLayer, DisplayName, Latitude, Longitude, CityName, StateName, CountryName, ContinentName, RID, Color_Confirmed FROM dtrends.covid_19 WHERE SUBSTRING(RID, 1, 10)= '" + controlDate + "' GROUP BY DisplayName;";
+        let stat1 = "SELECT CaseNum, LayerType, FirstLayer, SecondLayer, DisplayName, Latitude, Longitude," +
+            " CityName, StateName, CountryName, ContinentName, RID, Color_Confirmed FROM dtrends.covid_19 " +
+            "WHERE Date= '" + req.query.RID + "' GROUP BY DisplayName;";
+        let stat2 = "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));";
+        // let stat3 = "SELECT SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
+        let stat3 = "SELECT Date From dtrends.covid_19;";
+        let stat4 = stat2 + stat1 + stat3;
+
+        con_DT.query(stat4, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                // console.log(results[1]);
+                res.json({"error": false, "data": results[1]});
+            }
+        });
+    });
 
     app.get('/position',function (req,res) {
         res.setHeader("Access-Control-Allow-Origin", "*"); // Allow cross domain header
@@ -254,7 +247,7 @@ module.exports = function (app, passport) {
         // console.log("Parsed Layers: ");
         // console.log(parsedLayers);
 
-        con_DT.query('SELECT Longitude, Latitude, Altitude FROM LayerMenu WHERE LayerName = ?', parsedLayers[0], function (err, results) {
+        con_DT.query('SELECT LayerName, Longitude, Latitude, Altitude FROM LayerMenu WHERE LayerName = ?', parsedLayers[0], function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "no result found!"});
@@ -267,8 +260,6 @@ module.exports = function (app, passport) {
         //     res.json({"Longitude": results[0].Longitude, "Latitude" : results[0].Latitude, "Altitude" : results[0].Altitude, "ThirdLayer": results[0].ThirdLayer, "LayerName":results[0].LayerName});
         // })
     });
-
-    app.get('/reDownload', () => predownloadXml());
 
     function copyXML(){
         const today = new Date();//get the current date
@@ -323,6 +314,34 @@ module.exports = function (app, passport) {
 
         fs.readdir(copyDestDir, (err, files) => {//a method to calculate the number of the files in the geoCapacity folder
 
+            // if(files.length > num_backups){
+            //
+            //     //if there are more than 100 file in the directory
+            //     if(!downloadFalse){ //if download succeed, run the code below
+            //         fs.unlink(copyDestDir + "/" + files[0], (err) => { //delete the first (the oldest) file in the directory
+            //             if (err) {throw err} else {
+            //                 downloadFalse = true; //change the value of "downloadFalse" to true
+            //             }
+            //             console.log('download and remove copy successfully');
+            //         })
+            //     } else { //if download failed, run the code below
+            //         fs.unlink(copyDestDir + "/" + files[files.length-1], (err) => { //then delete the last (the latest) file in the directory
+            //             if (err) {throw err}
+            //             console.log('download file failed, removed copy successfully')
+            //         })
+            //     }
+            // }else {
+            //     //if the file number is less than num_backups, and download failed
+            //     if (files.length > 0) {
+            //         if (downloadFalse === null) {
+            //             fs.unlink(copyDestDir + "/" + files[files.length - 1], (err) => { //then delete the last (the latest) file in the directory
+            //                 if (err) throw err;
+            //                 console.log('download file failed,number is less than num_backups, removed copy successfully')
+            //             })
+            //         }
+            //     }
+            // }
         });
     }
+
 };

@@ -15,11 +15,16 @@ define([
 
         // generatePlacemarkLayer(csvdata);
 
+        if (countries === null && continents == null) {
+            console.log('hi!')
+        }
+
         // request the data for placemarks with given date and country
         $.ajax({
             url: '/1dData',
             type: 'GET',
-            data: {date: date, countries: countries, continents: continents},
+            // data: {date: date, countries: countries, continents: continents},
+            data: {date: date},
             dataType: 'json',
             async: false,
             success: function (resp) {

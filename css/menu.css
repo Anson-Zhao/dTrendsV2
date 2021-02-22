@@ -233,6 +233,18 @@ ul.nav {
   pointer-events: none;
 }
 
+.disabled-menu {
+  disabled: true;
+  color: gray;
+  border-color: gray;
+}
+.disabled-link {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
 .enabled-icon {
   opacity: 1;
   pointer-events: auto;

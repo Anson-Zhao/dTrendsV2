@@ -99,7 +99,7 @@ define([
         const a = layers.findIndex(ele => ele.displayName === layerName)
         if (!layers[a].hide) {
 
-            if (layers[a].displayName === layerName && layers[a].layerType == "H_PKLayer") {
+            if (layers[a].displayName === layerName && layers[a].layerType === "H_PKLayer") {
                 layers[a].enabled = !layers[a].enabled;
                 $.ajax({
                     url: '/rr',
@@ -272,6 +272,32 @@ define([
         projectionDropdown.append(ulItem);
 
     };
+
+    LayerManager.prototype.categoryListVaccine = function() {
+        let Vaccinations = [
+            "Total Vaccinations",
+            "Incomplete Vaccinations",
+            "Completed Vaccinations",
+            "Daily Vaccinations",
+            "Daily Vaccinations/million"
+        ]
+        let projectionDropdown = $("#categoryListVaccinations");
+
+        let dropdownButton = $('<button class="btn btn-info btn-block dropdown-toggle" id="vaccine-category" type="button" data-toggle="dropdown">Global Vaccinations<span class="caret"></span></button>');
+        projectionDropdown.append(dropdownButton);
+        projectionDropdown.find("button").css("background-color", "blue");
+        let ulItem = $('<ul class="dropdown-menu">');
+        projectionDropdown.append(ulItem);
+
+        for (let i = 0; i < Vaccinations.length; i++) {
+            let projectionItem = $('<li><a>' + Vaccinations[i] + '</a></li>');
+            ulItem.append(projectionItem);
+        }
+
+        ulItem = $('</ul>');
+        console.log(ulItem);
+        projectionDropdown.append(ulItem);
+    }
 
     LayerManager.prototype.diseaseList = function () {
         let diseaseName = [
