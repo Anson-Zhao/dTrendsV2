@@ -187,9 +187,13 @@ define([
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                console.log("layers on")
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
+                        console.log("Placemark Date: "+ d.userProperties.Date);
+                        console.log("Current Date: " + currentD);
                         if (d.userProperties.Date == currentD) {
+                            console.log("date equals current")
                             // console.log(currentD, categoryS);
                             if (d.userProperties.Type == categoryS) {
                                 d.enabled = true;
@@ -890,7 +894,7 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         await newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
@@ -1153,9 +1157,10 @@ define([
             slide: function (event, ui) {
                 // console.log(ui.value * 1000);
                 // console.log(event)
-                //updates text
                 // console.log($.format.date(ui.value * 1000, "yyyy-MM-dd"));
                 // $("#amount").val($.format.date(ui.value, "yyyy-MM-dd"));
+
+                //updates text of current date of slider
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
