@@ -21,8 +21,8 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
-    let date1 = dataAll.arrDate[0];
-    // let date1 = dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength];
+    // let date1 = dataAll.arrDate[0];
+    let date1 = dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
     if (date1 !== undefined && date2 !== undefined) {
@@ -769,7 +769,8 @@ requirejs([
         $("#COVID-19-checkbox").on("click", function (e) {
             // controls.covid19();
             // console.log(fromDateH.val())
-            fromDateH.val(dataAll.arrDate[0].Date);
+            // fromDateH.val(dataAll.arrDate[0].Date);
+            fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
             // console.log(fromDateH.val());
             // let toggle = this;
             if (this.checked && coviderror !== true) {
@@ -971,7 +972,8 @@ requirejs([
         layerManager.categoryListVaccine();
 
         //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
-        fromDateH.val(dataAll.arrDate[0].Date);
+        // fromDateH.val(dataAll.arrDate[0].Date);
+        fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
         toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         // console.log(dataAll.arrDate[0].Date);
@@ -1038,7 +1040,8 @@ requirejs([
         if (coviderror !== true) {
             flatpickr(".date", {
                 defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
-                minDate: dataAll.arrDate[0].Date,
+                // minDate: dataAll.arrDate[0].Date,
+                minDate:  dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date,
                 maxDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
                 inline: false,
                 dateFormat: "Y-m-d",
