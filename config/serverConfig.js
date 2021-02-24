@@ -3,8 +3,8 @@ let serverConfig = {
     commondb_connection: {
         'multipleStatements': true,
         'connectionLimit' : 100,
-        'host': 'localhost',
-        // 'host': '10.11.90.16',
+        // 'host': 'localhost',
+        'host': '10.11.90.16',
         'user': 'AppUser',
         'password': 'Special888%',
         'port'    :  3306
@@ -12,8 +12,8 @@ let serverConfig = {
     session_connection: {
         'multipleStatements': true,
         'connectionLimit' : 100,
-        'host': 'localhost',
-        // 'host': '10.11.90.16',
+        // 'host': 'localhost',
+        'host': '10.11.90.16',
         'user': 'AppUser',
         'password': 'Special888%',
         'port'    :  3306
@@ -44,7 +44,7 @@ let serverConfig = {
     // local_URL : "http://viewer.usgs.aworldbridgelabs.com",
 
     //upload path to geoserver when approved
-    geoServer : 'https://cors.aworldbridgelabs.com:9084/http://cs.aworldbridgelabs.com:8080/geoserver/',
+    geoServer : 'http://cs.aworldbridgelabs.com:8080/geoserver/',
     // geoServer : 'http://10.11.90.16:8080/geoserver/',
 
     //sysnchronization between approvedfolder and data folder under geoserver when approved

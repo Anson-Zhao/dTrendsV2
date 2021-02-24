@@ -273,6 +273,32 @@ define([
 
     };
 
+    LayerManager.prototype.categoryListVaccine = function() {
+        let Vaccinations = [
+            "Total Vaccinations",
+            "Incomplete Vaccinations",
+            "Completed Vaccinations",
+            "Daily Vaccinations",
+            "Daily Vaccinations/million"
+        ]
+        let projectionDropdown = $("#categoryListVaccinations");
+
+        let dropdownButton = $('<button class="btn btn-info btn-block dropdown-toggle" id="vaccine-category" type="button" data-toggle="dropdown">Global Vaccinations<span class="caret"></span></button>');
+        projectionDropdown.append(dropdownButton);
+        projectionDropdown.find("button").css("background-color", "blue");
+        let ulItem = $('<ul class="dropdown-menu">');
+        projectionDropdown.append(ulItem);
+
+        for (let i = 0; i < Vaccinations.length; i++) {
+            let projectionItem = $('<li><a>' + Vaccinations[i] + '</a></li>');
+            ulItem.append(projectionItem);
+        }
+
+        ulItem = $('</ul>');
+        console.log(ulItem);
+        projectionDropdown.append(ulItem);
+    }
+
     LayerManager.prototype.diseaseList = function () {
         let diseaseName = [
             "COVID-19",

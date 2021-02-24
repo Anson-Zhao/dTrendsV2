@@ -60,6 +60,7 @@ requirejs([
     const dataTypes = ['Country', 'Weather Station'];
     let countryL = [];
     let coviderror;
+    let vaccineerror;
     let layerSelected, Altitude;
     let j = 0;
 
@@ -115,7 +116,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        console.log(newGlobe.layers);
+        // console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
@@ -796,6 +797,7 @@ requirejs([
                 this.checked = false;
             } else {
                 document.getElementById("COVID-category").disabled = true;
+
                 document.getElementById("datesliderdiv").hidden = true;
                 document.getElementById("drawingtools-tab").style.pointerEvents = 'none';
                 document.getElementById("diseasetrends-tab").style.pointerEvents = 'none';
@@ -811,6 +813,23 @@ requirejs([
                 // document.getElementById("continentList").visibility = "hidden";
             }
         });
+
+        $("#GlobalVaccinations-checkbox").on("click",function(){
+            console.log("asdf");
+            if (this.checked && vaccineerror !== true){
+                console.log("clicked");
+                console.log($("#vaccine-category"));
+                console.log($("#categoryListVaccinations"));
+                document.getElementById("vaccine-category").disabled = false;
+
+            }
+            else{
+                console.log("closed");
+                document.getElementById("vaccine-category").disabled = true;
+
+            }
+
+        })
 
         $("#FoodSecurity-Agrosphere-Country-a").click(function () {
             let toggle = document.getElementById("Country-alltoggle");
@@ -950,6 +969,7 @@ requirejs([
         layerManager.synchronizeLayerList();
         layerManager.continentList();
         layerManager.categoryList();
+        layerManager.categoryListVaccine();
 
         //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
         // fromDateH.val(dataAll.arrDate[0].Date);

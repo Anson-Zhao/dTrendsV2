@@ -1,8 +1,7 @@
-
 requirejs([
     'globeObject',
     '../config/clientConfig'
-    ,'menu'
+    , 'menu'
 ], function (newGlobe) {
 
     "use strict";
@@ -13,75 +12,101 @@ requirejs([
     let secondDownload = false;
     let preloadWmsLayers = [];//preload entire layer name
 
+    console.log("WMS.js loaded.");
     //preload wmsLayer by getting the xml file of wmslayer and pass the file into  createLayer function.
     $.get(serviceAddress1).done(createWMSLayer).fail(logError);
 
-    function createWMSLayer (xmlDom) {
+    function createWMSLayer(xmlDom) {
+        console.log("Create WMS Layer");
 
         // Create a WmsCapabilities object from the XML DOM
         let wms = new WorldWind.WmsCapabilities(xmlDom);
 
         // Retrieve a WmsLayerCapabilities object by the desired layer name
         $(".WmsLayer").each(function (i) {
-            preloadWmsLayers[i] = $(this).val();
-            let parsed = preloadWmsLayers[i].split(",");
+            let parsed = $(this).val();
+            console.log(parsed);
 
-            if (parsed.length > 1) {
-                for (let j = 0; j < parsed.length; j++) {
-                    if (!parsed[j]) return true;
-                    let wmsLayerCapability = wms.getNamedLayer(parsed[j]);
+            if (!parsed) return true;
+            let wmsLayerCapability = wms.getNamedLayer(parsed);
 
-                    // Form a configuration object from the wmsLayerCapability object
-                    if (!wmsLayerCapability) return true;
-                    let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
+            // Form a configuration object from the wmsLayerCapability object
+            if (!wmsLayerCapability) return true;
+            let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
 
-                    // Modify the configuration objects title property to a more user friendly title
-                    if (!wmsLayerCapability) return true;
-                    wmsConfig.title = parsed[j];
+            // Modify the configuration objects title property to a more user friendly title
+            if (!wmsLayerCapability) return true;
+            wmsConfig.title = parsed;
+            console.log(wmsConfig);
 
-                    // Create the WMS Layer from the configuration object
-                    let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
-                    wmsLayer.enabled = false;
+            // Create the WMS Layer from the configuration object
+            let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
+            wmsLayer.enabled = false;
 
-                    // Add the layers to WorldWind and update the layer manager
-                    newGlobe.addLayer(wmsLayer);
-                }
+            // Add the layers to WorldWind and update the layer manager
+            newGlobe.addLayer(wmsLayer);
+            console.log(newGlobe.layers);
 
-            } else {
-                if (!preloadWmsLayers[i]) return true;
-                let wmsLayerCapability = wms.getNamedLayer(preloadWmsLayers[i]);
-
-                // Form a configuration object from the wmsLayerCapability object
-                if (!wmsLayerCapability) return true;
-                let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
-
-                // Modify the configuration objects title property to a more user friendly title
-                if (!wmsConfig) return true;
-                wmsConfig.title = preloadWmsLayers[i];
-
-                // Create the WMS Layer from the configuration object
-                let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
-                wmsLayer.enabled = false;
-                wmsLayer.layerType = "WmsLayer";
-
-                // Add the layers to WorldWind and update the layer manager
-                newGlobe.addLayer(wmsLayer);
-            }
-
+            // preloadWmsLayers[i] = $(this).val();
+            // let parsed = preloadWmsLayers[i].split(",");
+            //
+            // console.log(preloadWmsLayers[i]);
+            // console.log(parsed);
+            //
+            // if (parsed.length > 1) {
+            //     for (let j = 0; j < parsed.length; j++) {
+            //         if (!parsed[j]) continue;
+            //         let wmsLayerCapability = wms.getNamedLayer(parsed[j]);
+            //
+            //         // Form a configuration object from the wmsLayerCapability object
+            //         if (!wmsLayerCapability) continue;
+            //         let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
+            //
+            //         // Modify the configuration objects title property to a more user friendly title
+            //         if (!wmsLayerCapability) continue;
+            //         wmsConfig.title = parsed[j];
+            //
+            //         // Create the WMS Layer from the configuration object
+            //         let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
+            //         wmsLayer.enabled = false;
+            //
+            //         // Add the layers to WorldWind and update the layer manager
+            //         newGlobe.addLayer(wmsLayer);
+            //     }
+            //
+            // } else {
+            //     if (!preloadWmsLayers[i]) return true;
+            //     let wmsLayerCapability = wms.getNamedLayer(preloadWmsLayers[i]);
+            //
+            //     // Form a configuration object from the wmsLayerCapability object
+            //     if (!wmsLayerCapability) return true;
+            //     let wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapability);
+            //
+            //     // Modify the configuration objects title property to a more user friendly title
+            //     if (!wmsLayerCapability) return true;
+            //     wmsConfig.title = preloadWmsLayers[i];
+            //
+            //     // Create the WMS Layer from the configuration object
+            //     let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
+            //     wmsLayer.enabled = false;
+            //
+            //     // Add the layers to WorldWind and update the layer manager
+            //     newGlobe.addLayer(wmsLayer);
+            // }
         });
     }
 
     // Called if an error occurs during WMS Capabilities document retrieval
-    function logError (jqXhr, text, exception) {
-        secondDownload = !secondDownload;
+    function logError(jqXhr, text, exception) {
+        // secondDownload = !secondDownload;
         console.log("There was a failure retrieving the capabilities document: " + text + " exception: " + exception);
 
         if (secondDownload) {
             $.get(serviceAddress2).done(createWMSLayer).fail(logError);
-            $.get('/reDownload');
+            // $.get('/reDownload');
         } else {
-        console.log("Failed to load WMS...")
-            $.get(serviceAddress1).done(createWMSLayer).fail(logError);
+            console.log("WMS loading fail!");
+            // $.get(serviceAddress1).done(createWMSLayer).fail(logError);
         }
     }
 
