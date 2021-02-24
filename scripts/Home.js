@@ -974,6 +974,8 @@ requirejs([
         //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
         // fromDateH.val(dataAll.arrDate[0].Date);
         fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
+        console.log(fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date));
+        console.log(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
         toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         // console.log(dataAll.arrDate[0].Date);
