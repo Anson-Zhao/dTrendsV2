@@ -1144,7 +1144,7 @@ define([
         // console.log(fromDate.val());
 
         $("#slider-range").slider({
-            min: new Date(dataAll.arrDate[0].Date).getTime() / 1000 + 86400,
+            min: new Date(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date).getTime() / 1000 + 86400,
             max: new Date(dataAll.arrDate[dataAll.arrDate.length - 1].Date).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(sd).getTime() / 1000 + 86400,
@@ -1226,7 +1226,7 @@ define([
     //overrides user changes in filter option dialog box; sets date range to max range, continents to all
     let fullLoad = function () {
         if ($('input#fullLoad').is(':checked')) {
-            $('.filterFrom').val(dataAll.arrDate[0].Date);
+            $('.filterFrom').val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
             $('.filterTo').val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
             $('.filterFrom, .filterTo').css('background-color', 'lightgray');
             $('.filterFrom, .filterTo').prop('disabled', true);
