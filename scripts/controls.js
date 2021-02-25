@@ -187,15 +187,17 @@ define([
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-                console.log("layers on")
+                // console.log("layers on")
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        console.log("Placemark Date: "+ d.userProperties.Date);
-                        console.log("Current Date: " + currentD);
+                        // console.log("Placemark Date: "+ d.userProperties.Date);
+                        // console.log("Current Date: " + currentD);
                         if (d.userProperties.Date == currentD) {
-                            console.log("date equals current")
-                            // console.log(currentD, categoryS);
+                            // console.log("date equals current")
+                            console.log(currentD, categoryS);
                             if (d.userProperties.Type == categoryS) {
+                                console.log("selected")
+                                console.log(d.userProperties.dName);
                                 d.enabled = true;
                                 // console.log(d);
                             } else {
@@ -995,6 +997,7 @@ define([
         l = setInterval(function () {
 
                 //updates current date picker and date slider
+                console.log("timelapse was run")
                 updateCurr(dataAll.arrDate[a].Date);
                 let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
@@ -1164,6 +1167,8 @@ define([
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
+                // console.log("date slider was run")
+                // console.log($("#amount").val())
                 updateCurr($("#amount").val());
 
                 //update filter boundaries with changes in date

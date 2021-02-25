@@ -116,7 +116,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        // console.log(newGlobe.layers);
+        console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
@@ -788,6 +788,7 @@ requirejs([
                 // controls.onCategory("Confirmed Cases","Confirmed Cases");
                 $( "#slider-range" ).slider( "enable" );
                 controls.enableAllCovid();
+                console.log("COVID checkbox ran")
                 controls.updateCurr($("#amount").val());
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
