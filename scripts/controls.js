@@ -187,11 +187,17 @@ define([
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                // console.log("layers on")
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
+                        // console.log("Placemark Date: "+ d.userProperties.Date);
+                        // console.log("Current Date: " + currentD);
                         if (d.userProperties.Date == currentD) {
-                            // console.log(currentD, categoryS);
+                            // console.log("date equals current")
+                            console.log(currentD, categoryS);
                             if (d.userProperties.Type == categoryS) {
+                                console.log("selected")
+                                console.log(d.userProperties.dName);
                                 d.enabled = true;
                                 // console.log(d);
                             } else {
@@ -890,7 +896,7 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         await newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
@@ -991,6 +997,7 @@ define([
         l = setInterval(function () {
 
                 //updates current date picker and date slider
+                console.log("timelapse was run")
                 updateCurr(dataAll.arrDate[a].Date);
                 let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
@@ -1144,7 +1151,7 @@ define([
         // console.log(fromDate.val());
 
         $("#slider-range").slider({
-            min: new Date(dataAll.arrDate[0].Date).getTime() / 1000 + 86400,
+            min: new Date(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date).getTime() / 1000 + 86400,
             max: new Date(dataAll.arrDate[dataAll.arrDate.length - 1].Date).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(sd).getTime() / 1000 + 86400,
@@ -1153,12 +1160,15 @@ define([
             slide: function (event, ui) {
                 // console.log(ui.value * 1000);
                 // console.log(event)
-                //updates text
                 // console.log($.format.date(ui.value * 1000, "yyyy-MM-dd"));
                 // $("#amount").val($.format.date(ui.value, "yyyy-MM-dd"));
+
+                //updates text of current date of slider
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
+                // console.log("date slider was run")
+                // console.log($("#amount").val())
                 updateCurr($("#amount").val());
 
                 //update filter boundaries with changes in date
@@ -1226,7 +1236,7 @@ define([
     //overrides user changes in filter option dialog box; sets date range to max range, continents to all
     let fullLoad = function () {
         if ($('input#fullLoad').is(':checked')) {
-            $('.filterFrom').val(dataAll.arrDate[0].Date);
+            $('.filterFrom').val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
             $('.filterTo').val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
             $('.filterFrom, .filterTo').css('background-color', 'lightgray');
             $('.filterFrom, .filterTo').prop('disabled', true);

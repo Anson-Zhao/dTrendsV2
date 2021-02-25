@@ -10,14 +10,12 @@ requirejs([
     let serviceAddress1 = config.serviceAddress1;
     let serviceAddress2 = config.serviceAddress2;
     let secondDownload = false;
-    let preloadWmsLayers = [];//preload entire layer name
+    // let preloadWmsLayers = [];//preload entire layer name
 
-    console.log("WMS.js loaded.");
     //preload wmsLayer by getting the xml file of wmslayer and pass the file into  createLayer function.
     $.get(serviceAddress1).done(createWMSLayer).fail(logError);
 
     function createWMSLayer(xmlDom) {
-        console.log("Create WMS Layer");
 
         // Create a WmsCapabilities object from the XML DOM
         let wms = new WorldWind.WmsCapabilities(xmlDom);
@@ -25,7 +23,6 @@ requirejs([
         // Retrieve a WmsLayerCapabilities object by the desired layer name
         $(".WmsLayer").each(function (i) {
             let parsed = $(this).val();
-            console.log(parsed);
 
             if (!parsed) return true;
             let wmsLayerCapability = wms.getNamedLayer(parsed);
@@ -37,7 +34,6 @@ requirejs([
             // Modify the configuration objects title property to a more user friendly title
             if (!wmsLayerCapability) return true;
             wmsConfig.title = parsed;
-            console.log(wmsConfig);
 
             // Create the WMS Layer from the configuration object
             let wmsLayer = new WorldWind.WmsLayer(wmsConfig);
@@ -45,7 +41,6 @@ requirejs([
 
             // Add the layers to WorldWind and update the layer manager
             newGlobe.addLayer(wmsLayer);
-            console.log(newGlobe.layers);
 
             // preloadWmsLayers[i] = $(this).val();
             // let parsed = preloadWmsLayers[i].split(",");
