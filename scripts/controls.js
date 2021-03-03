@@ -186,42 +186,43 @@ define([
         // console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         console.log(newGlobe.layers)
-        await newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-                // console.log("layers on")
-                elem.renderables.forEach(function (d) {
-                    if (d instanceof WorldWind.Placemark) {
-                        // console.log("Placemark Date: "+ d.userProperties.Date);
-                        // console.log("Current Date: " + currentD);
-                        if (d.userProperties.Date == currentD) {
-                            // console.log("date equals current")
-                            console.log(currentD, categoryS);
-                            if (d.userProperties.Type == categoryS) {
-                                // console.log("selected")
-                                // console.log(d.userProperties.dName);
-                                d.enabled = true;
-                                // console.log(d);
-                            } else {
-                                d.enabled = false;
-                            }
-                            if (d.userProperties.Type == "Confirmed Cases") {
-                                numC += d.userProperties.Number;
-                                // console.log(d.userProperties.Number)
-                            } else if (d.userProperties.Type == "Deaths") {
-                                numD += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Recoveries") {
-                                numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
-                                numA += d.userProperties.Number;
-                            }
-                        } else {
-                            d.enabled = false;
-                        }
-                    }
-                })
-            }
-            newGlobe.redraw()
-        });
+        // await newGlobe.layers.forEach(function (elem) {
+        //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+        //         // console.log("layers on")
+        //         elem.renderables.forEach(function (d) {
+        //             if (d instanceof WorldWind.Placemark) {
+        //                 // console.log("Placemark Date: "+ d.userProperties.Date);
+        //                 // console.log("Current Date: " + currentD);
+        //                 if (d.userProperties.Date == currentD) {
+        //                     // console.log("date equals current")
+        //                     console.log(currentD, categoryS);
+        //                     if (d.userProperties.Type == categoryS) {
+        //                         // console.log("selected")
+        //                         // console.log(d.userProperties.dName);
+        //                         d.enabled = true;
+        //                         // console.log(d);
+        //                     } else {
+        //                         d.enabled = false;
+        //                     }
+        //                     if (d.userProperties.Type == "Confirmed Cases") {
+        //                         numC += d.userProperties.Number;
+        //                         // console.log(d.userProperties.Number)
+        //                     } else if (d.userProperties.Type == "Deaths") {
+        //                         numD += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Recoveries") {
+        //                         numR += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Active Cases") {
+        //                         numA += d.userProperties.Number;
+        //                     }
+        //                 } else {
+        //                     d.enabled = false;
+        //                 }
+        //             }
+        //         })
+        //     }
+        //     newGlobe.redraw()
+        // });
+        updateCOVID(categoryS, currentD)
 
         //updates text under second right tab containing total case numbers up to current date shown
         $('#conConfirmed').text(numC);
@@ -2043,6 +2044,16 @@ define([
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date === date) {
+                            if (d.userProperties.Type == "Confirmed Cases") {
+                            numC += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Deaths") {
+                                numD += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Recoveries") {
+                                numR += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Active Cases") {
+                                numA += d.userProperties.Number;
+                            }
+
                             d.enabled = d.userProperties.Type === category;
                         } else {
                             d.enabled = false;
@@ -2050,7 +2061,9 @@ define([
                     }
                 })
             }
-            newGlobe.redraw()
+            if (index === newGlobe.layers.length - 1) {
+                newGlobe.redraw()
+            }
         });
     }
 
