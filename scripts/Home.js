@@ -21,6 +21,10 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
+    if (window.config.initLength === undefined) {
+        alert("Error loading layers. Please refresh the page. ")
+    }
+
     // let date1 = dataAll.arrDate[0];
     let date1 = dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
@@ -31,6 +35,8 @@ requirejs([
         // covidPK([date1.Date, date2.Date], "Recoveries", "init");
         // covidPK([date1.Date, date2.Date], "Active Cases", "init");
 
+    } else {
+        alert("Error loading layers. Please refresh the page. ")
     }
 
     let fromDateH = $('#fromdatepicker');
@@ -116,7 +122,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        console.log(newGlobe.layers);
+        // console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
