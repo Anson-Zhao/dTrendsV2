@@ -1178,10 +1178,10 @@ define([
                 //update current placemark display based on slider/current date
                 // console.log("date slider was run")
                 // console.log($("#amount").val())
-                updateCurr($("#amount").val());
 
                 //update filter boundaries with changes in date
                 updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1));
+                updateCurr($("#amount").val());
             }
         });
         //display current date
