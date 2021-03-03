@@ -175,7 +175,7 @@ define([
         // console.log(toD)
     }
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
-    let updateCurr = function (currentD) {
+    let updateCurr = async function (currentD) {
         //reset case numbers
         numC = 0;
         numD = 0;
@@ -185,40 +185,44 @@ define([
         // console.log(currentD)
         // console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
-        newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-                console.log("layers on")
-                elem.renderables.forEach(function (d) {
-                    if (d instanceof WorldWind.Placemark) {
-                        console.log("Placemark Date: "+ d.userProperties.Date);
-                        console.log("Current Date: " + currentD);
-                        if (d.userProperties.Date == currentD) {
-                            console.log("date equals current")
-                            // console.log(currentD, categoryS);
-                            if (d.userProperties.Type == categoryS) {
-                                d.enabled = true;
-                                // console.log(d);
-                            } else {
-                                d.enabled = false;
-                            }
-                            if (d.userProperties.Type == "Confirmed Cases") {
-                                numC += d.userProperties.Number;
-                                // console.log(d.userProperties.Number)
-                            } else if (d.userProperties.Type == "Deaths") {
-                                numD += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Recoveries") {
-                                numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
-                                numA += d.userProperties.Number;
-                            }
-                        } else {
-                            d.enabled = false;
-                        }
-                    }
-                })
-            }
-            newGlobe.redraw()
-        });
+        console.log(newGlobe.layers)
+        // await newGlobe.layers.forEach(function (elem) {
+        //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+        //         // console.log("layers on")
+        //         elem.renderables.forEach(function (d) {
+        //             if (d instanceof WorldWind.Placemark) {
+        //                 // console.log("Placemark Date: "+ d.userProperties.Date);
+        //                 // console.log("Current Date: " + currentD);
+        //                 if (d.userProperties.Date == currentD) {
+        //                     // console.log("date equals current")
+        //                     console.log(currentD, categoryS);
+        //                     if (d.userProperties.Type == categoryS) {
+        //                         // console.log("selected")
+        //                         // console.log(d.userProperties.dName);
+        //                         d.enabled = true;
+        //                         // console.log(d);
+        //                     } else {
+        //                         d.enabled = false;
+        //                     }
+        //                     if (d.userProperties.Type == "Confirmed Cases") {
+        //                         numC += d.userProperties.Number;
+        //                         // console.log(d.userProperties.Number)
+        //                     } else if (d.userProperties.Type == "Deaths") {
+        //                         numD += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Recoveries") {
+        //                         numR += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Active Cases") {
+        //                         numA += d.userProperties.Number;
+        //                     }
+        //                 } else {
+        //                     d.enabled = false;
+        //                 }
+        //             }
+        //         })
+        //     }
+        //     newGlobe.redraw()
+        // });
+        updateCOVID(categoryS, currentD)
 
         //updates text under second right tab containing total case numbers up to current date shown
         $('#conConfirmed').text(numC);
@@ -913,7 +917,7 @@ define([
     };
 
     //under second left tab, third dropdown menu; used to display all countries/layers in that continent
-    let onContinent = function (event) {
+    let onContinent = async function (event) {
         //grab the continent value when selected by user.
         let continentS = event.target.innerText || event.target.innerHTML;
         let findCountryIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
@@ -935,7 +939,7 @@ define([
         ];
 
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
-        newGlobe.layers.forEach(function (elem, index) {
+        await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
                 if (elem.continent !== continentS && elem.layerType == "H_PKLayer") {
                     if (continentS == 'All Continents') {
@@ -993,34 +997,43 @@ define([
     let timelapse = function (sd,ed) {
         let a = dataAll.arrDate.findIndex(dat => dat.Date === sd)
         l = setInterval(function () {
+                let dDate = dataAll.arrDate[a].Date;
 
                 //updates current date picker and date slider
-                updateCurr(dataAll.arrDate[a].Date);
-                let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
+                console.log("timelapse was run")
+                // updateCurr(dataAll.arrDate[a].Date);
+                updateCurr(dDate);
+                // let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
+                let val = new Date(dDate).getTime() / 1000;
                 $("#slider-range").slider("value", val);
-                $("#amount").val(dataAll.arrDate[a].Date);
+                // $("#amount").val(dataAll.arrDate[a].Date);
+                $("#amount").val(dDate);
 
-                //enables placemark based on the user properties date and type
-                newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-                        elem.renderables.forEach(function (d) {
-                            if (d instanceof WorldWind.Placemark) {
-                                if (d.userProperties.Date === dataAll.arrDate[a].Date) {
-                                    d.enabled = d.userProperties.Type === categoryS;
-                                } else {
-                                    d.enabled = false;
-                                }
-                            }
-                        })
-                    }
-                    newGlobe.redraw()
-                });
+                // //enables placemark based on the user properties date and type
+                // newGlobe.layers.forEach(function (elem, index) {
+                //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                //         elem.renderables.forEach(function (d) {
+                //             if (d instanceof WorldWind.Placemark) {
+                //                 if (d.userProperties.Date === dataAll.arrDate[a].Date) {
+                //                     d.enabled = d.userProperties.Type === categoryS;
+                //                 } else {
+                //                     d.enabled = false;
+                //                 }
+                //             }
+                //         })
+                //     }
+                //     newGlobe.redraw()
+                // });
+
+                updateCOVID(categoryS, dDate)
 
 
 
                 //when date reaches 'To' date aka end of date range, stop animation
-                if (ed === dataAll.arrDate[a].Date) {
-                    curDate.val(dataAll.arrDate[a].Date);
+                // if (ed === dataAll.arrDate[a].Date) {
+                if (ed === dDate) {
+                    // curDate.val(dataAll.arrDate[a].Date);
+                    curDate.val(dDate);
 
                     $('#pauseTL').hide();
                     $('#toggleTL').show();
@@ -1048,11 +1061,11 @@ define([
     }
 
     //under third left tab; used to update placemarks shown based on filter boundaries
-    let updateHIS = function (v1, v2) {
+    let updateHIS = async function (v1, v2) {
         let sortLayers = [];
 
         //enables placemark based on the placemark properties current date and type
-        newGlobe.layers.forEach(function (elem, index) {
+        await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
@@ -1164,10 +1177,12 @@ define([
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
-                updateCurr($("#amount").val());
+                // console.log("date slider was run")
+                // console.log($("#amount").val())
 
                 //update filter boundaries with changes in date
                 updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1));
+                updateCurr($("#amount").val());
             }
         });
         //display current date
@@ -2022,6 +2037,36 @@ define([
         }
     };
 
+    let updateCOVID = async function(category, date) {
+        //enables placemark based on the user properties date and type
+        await newGlobe.layers.forEach(function (elem, index) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                elem.renderables.forEach(function (d) {
+                    if (d instanceof WorldWind.Placemark) {
+                        if (d.userProperties.Date === date) {
+                            if (d.userProperties.Type == "Confirmed Cases") {
+                            numC += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Deaths") {
+                                numD += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Recoveries") {
+                                numR += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Active Cases") {
+                                numA += d.userProperties.Number;
+                            }
+
+                            d.enabled = d.userProperties.Type === category;
+                        } else {
+                            d.enabled = false;
+                        }
+                    }
+                })
+            }
+            if (index === newGlobe.layers.length - 1) {
+                newGlobe.redraw()
+            }
+        });
+    }
+
     //enables all layers; if layer is disabled, force enable it
     function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
@@ -2087,7 +2132,8 @@ define([
         createFourthLayer,
         covid19,
         influenza,
-        handlePick
+        handlePick,
+        updateCOVID
         // play
 
     }
