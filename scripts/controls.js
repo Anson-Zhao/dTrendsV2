@@ -67,28 +67,29 @@ define([
     // console.log(newGlobe.layers)
     //under initial load for case numbers
     let initCaseNum = function () {
-        newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-                elem.renderables.forEach(function (d) {
-                    if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type == "Confirmed Cases") {
-                                numC += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Deaths") {
-                                numD += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Recoveries") {
-                                numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
-                                numA += d.userProperties.Number;
-                            }
-                        }
-                    }
-                });
-            }
-            if (index == newGlobe.layers.length - 1) {
-                newGlobe.redraw()
-            }
-        });
+        // newGlobe.layers.forEach(function (elem, index) {
+        //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+        //         elem.renderables.forEach(function (d) {
+        //             if (d instanceof WorldWind.Placemark) {
+        //                 if (d.userProperties.Date == curDate.val()) {
+        //                     if (d.userProperties.Type == "Confirmed Cases") {
+        //                         numC += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Deaths") {
+        //                         numD += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Recoveries") {
+        //                         numR += d.userProperties.Number;
+        //                     } else if (d.userProperties.Type == "Active Cases") {
+        //                         numA += d.userProperties.Number;
+        //                     }
+        //                 }
+        //             }
+        //         });
+        //     }
+        //     if (index == newGlobe.layers.length - 1) {
+        //         newGlobe.redraw()
+        //     }
+        // });
+        updateCOVID("Confirmed Cases", curDate.val())
 
         $('#conConfirmed').text(numC);
         $('#conDeaths').text(numD);
@@ -897,23 +898,24 @@ define([
 
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
-        await newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer" && elem.enabled) {
-                elem.renderables.forEach(function (d) {
-                    if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type === categoryS) {
-                            d.enabled = true;
-                            // console.log(d)
-                        } else {
-                            d.enabled = false;
-                        }
-                    }
-                });
-            }
-            if (index === newGlobe.layers.length - 1) {
-                newGlobe.redraw();
-            }
-        });
+        // await newGlobe.layers.forEach(function (elem, index) {
+        //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer" && elem.enabled) {
+        //         elem.renderables.forEach(function (d) {
+        //             if (d instanceof WorldWind.Placemark) {
+        //                 if (d.userProperties.Type === categoryS) {
+        //                     d.enabled = true;
+        //                     // console.log(d)
+        //                 } else {
+        //                     d.enabled = false;
+        //                 }
+        //             }
+        //         });
+        //     }
+        //     if (index === newGlobe.layers.length - 1) {
+        //         newGlobe.redraw();
+        //     }
+        // });
+        updateCOVID(categoryS)
     };
 
     //under second left tab, third dropdown menu; used to display all countries/layers in that continent
@@ -1061,29 +1063,33 @@ define([
     }
 
     //under third left tab; used to update placemarks shown based on filter boundaries
-    let updateHIS = async function (v1, v2) {
+    let updateHIS = async function (v1, v2,skip="none") {
         let sortLayers = [];
 
-        //enables placemark based on the placemark properties current date and type
-        await newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-                elem.renderables.forEach(function (d) {
-                    if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type === categoryS) {
-                                sortLayers.push(d);
-                                d.enabled = true;
+        if (skip !== "yes") {
+            //enables placemark based on the placemark properties current date and type
+            await newGlobe.layers.forEach(function (elem, index) {
+                if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                    elem.renderables.forEach(function (d) {
+                        if (d instanceof WorldWind.Placemark) {
+                            if (d.userProperties.Date == curDate.val()) {
+                                if (d.userProperties.Type === categoryS) {
+                                    sortLayers.push(d);
+                                    d.enabled = true;
+                                } else {
+                                    d.enabled = false;
+                                }
                             } else {
                                 d.enabled = false;
                             }
-                        } else {
-                            d.enabled = false;
                         }
-                    }
-                })
-            }
-            newGlobe.redraw()
-        });
+                    })
+                }
+                if (index === newGlobe.layers.length - 1) {
+                    newGlobe.redraw()
+                }
+            });
+        }
 
         //sorts all enabled placemarks based on case number from least to greatest
         sortLayers.sort(function (a, b) {
@@ -1181,7 +1187,7 @@ define([
                 // console.log($("#amount").val())
 
                 //update filter boundaries with changes in date
-                updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1));
+                updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1), "yes");
                 updateCurr($("#amount").val());
             }
         });
@@ -2037,13 +2043,13 @@ define([
         }
     };
 
-    let updateCOVID = async function(category, date) {
+    let updateCOVID = async function(category, date="null") {
         //enables placemark based on the user properties date and type
         await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date === date) {
+                        if (d.userProperties.Date === date && date !== "null") {
                             if (d.userProperties.Type == "Confirmed Cases") {
                             numC += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Deaths") {
@@ -2054,6 +2060,8 @@ define([
                                 numA += d.userProperties.Number;
                             }
 
+                            d.enabled = d.userProperties.Type === category;
+                        } else if (date === "null") {
                             d.enabled = d.userProperties.Type === category;
                         } else {
                             d.enabled = false;

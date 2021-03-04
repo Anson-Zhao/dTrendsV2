@@ -1006,15 +1006,17 @@
         document.getElementById("diseasetrends-span").classList.add("enabled-icon");
         document.getElementById("reset-span").classList.add("enabled-icon");
 
-        let click_event = new CustomEvent('click');
-        let btn_element = document.querySelector('#COVID-19-checkbox');
-        btn_element.dispatchEvent(click_event);
+        // let click_event = new CustomEvent('click');
+        // let btn_element = document.querySelector('#COVID-19-checkbox');
+        // btn_element.dispatchEvent(click_event);
+
         // $("#COVID-19-checkbox")[o].click();
         // document.getElementById("controls-tab").style.pointerEvents = 'auto';
         // document.getElementById("reset-tab").style.pointerEvents = 'auto';
         // document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
         // document.getElementById("diseasetrends-tab").style.pointerEvents = 'auto';
-        // openTabLeft(event, 'options_div');
+        openTabLeft(event, 'options_div');
+        document.getElementById("COVID-19-checkbox").checked = true;
 
         // $( "#slider-range" ).slider( "enable" );
     }
