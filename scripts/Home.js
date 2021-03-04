@@ -21,8 +21,10 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
-    if (window.config.initLength === undefined) {
-        alert("Error loading layers. Please refresh the page. ")
+    if (window.config === undefined) {
+        alert("Error loading layers. Refreshing page... ")
+        location.reload();
+        return false;
     }
 
     // let date1 = dataAll.arrDate[0];
@@ -36,7 +38,9 @@ requirejs([
         // covidPK([date1.Date, date2.Date], "Active Cases", "init");
 
     } else {
-        alert("Error loading layers. Please refresh the page. ")
+        alert("Error loading layers. Refreshing page... ")
+        location.reload();
+        return false;
     }
 
     let fromDateH = $('#fromdatepicker');
@@ -1018,7 +1022,7 @@ requirejs([
         toDateH.change(function () {
             controls.updateTo(toDateH.val());
         });
-        controls.initCaseNum();
+        // controls.initCaseNum();
         //load slider functionalities
         controls.dateSlider(fromDateH.val());
         // console.log("asdf: ")
@@ -1095,8 +1099,8 @@ requirejs([
         $("#categoryList").find("li").on("click", function (e) {
             alert("Please wait a few seconds for the placemarks and layers to load...");
             controls.onCategory(e);
-            $( "#slider-range" ).slider( "enable" );
-            document.getElementById("COVID-19-checkbox").checked = true;
+            // $( "#slider-range" ).slider( "enable" );
+            // document.getElementById("COVID-19-checkbox").checked = true;
         });
 
         //dropdown menu for continent selection
