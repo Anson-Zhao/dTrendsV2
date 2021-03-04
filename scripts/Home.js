@@ -496,8 +496,6 @@ requirejs([
 
             $(".input-NDWI, .input-NDMI, .input-SWIR, .input-NDVI, .input-MoistureIndex").change(function(){
                 let toggle = this;
-                console.log(this.value);
-                console.log(this.checked)
                 togglePK(toggle.value, toggle.checked);
                 // if (toggle.checked === true) {
                 //     document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
@@ -810,8 +808,9 @@ requirejs([
                 document.getElementById("diseasetrends-tab").style.pointerEvents = 'none';
                 document.getElementById("drawingtools-span").classList.remove("enabled-icon");
                 document.getElementById("diseasetrends-span").classList.remove("enabled-icon");
-                document.getElementById("drawingtools-span").classList.add("disabled-icon");
+                    document.getElementById("drawingtools-span").classList.add("disabled-icon");
                 document.getElementById("diseasetrends-span").classList.add("disabled-icon");
+                document.getElementById("charts").style.pointerEvents = 'none';
                 $( "#slider-range" ).slider( "disable" );
                 // document.getElementById("drawingtools-tab").style.visibility = 'hidden';
                 // document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
@@ -981,8 +980,6 @@ requirejs([
         //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
         // fromDateH.val(dataAll.arrDate[0].Date);
         fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
-        console.log(fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date));
-        console.log(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
         toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         // console.log(dataAll.arrDate[0].Date);

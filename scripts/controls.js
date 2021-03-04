@@ -1002,7 +1002,6 @@ define([
                 let dDate = dataAll.arrDate[a].Date;
 
                 //updates current date picker and date slider
-                console.log("timelapse was run")
                 // updateCurr(dataAll.arrDate[a].Date);
                 updateCurr(dDate);
                 // let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
