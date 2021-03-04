@@ -6160,3 +6160,458 @@ The area covered by the data set is in the vicinity of Spearfish and includes a 
         <Name>USGS:0_NationalHydrographyDataset</Name>
         <Title>Waterbody - Large Scale</Title>
         <Abstract>Abstract:&#13;
+The National Hydrography Dataset (NHD) is a feature-based database that interconnects and uniquely identifies the stream segments or reaches that make up the nation's surface water drainage system.  NHD data was originally developed at 1:100,000-scale and exists at that scale for the whole country. This high-resolution NHD, generally developed at 1:24,000/1:12,000 scale, adds detail to the original 1:100,000-scale NHD. (Data for Alaska, Puerto Rico and the Virgin Islands was developed at high-resolution, not 1:100,000 scale.) Local resolution NHD is being developed where partners and data exist. The NHD contains reach codes for networked features, flow direction, names, and centerline representations for areal water bodies. Reaches are also defined on waterbodies and the approximate shorelines of the Great Lakes, the Atlantic and Pacific Oceans and the Gulf of Mexico. The NHD also incorporates the National Spatial Data Infrastructure framework criteria established by the Federal Geographic Data Committee.  Use the metadata link, http://nhdgeo.usgs.gov/metadata/nhd_high.htm, for additional information.&#13;
+Purpose:&#13;
+The NHD is a national framework for assigning reach addresses to water-related entities, such as industrial discharges, drinking water supplies, fish habitat areas, wild and scenic rivers. Reach addresses establish the locations of these entities relative to one another within the NHD surface water drainage network, much like addresses on streets. Once linked to the NHD by their reach addresses, the upstream/downstream relationships of these water-related entities--and any associated information about them--can be analyzed using software tools ranging from spreadsheets to geographic information systems (GIS). GIS can also be used to combine NHD-based network analysis with other data layers, such as soils, land use and population, to help understand and display their respective effects upon one another. Furthermore, because the NHD provides a nationally consistent framework for addressing and analysis, water-related information linked to reach addresses by one organization (national, state, local) can be shared with other organizations and easily integrated into many different types of applications to the benefit of all.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-178.001454</westBoundLongitude>
+          <eastBoundLongitude>145.823953</eastBoundLongitude>
+          <southBoundLatitude>-14.339644</southBoundLatitude>
+          <northBoundLatitude>71.385805</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-178.001454" miny="-14.339644" maxx="145.823953" maxy="71.385805"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.339644" miny="-178.001454" maxx="71.385805" maxy="145.823953"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:0_NaturalEarth</Name>
+        <Title>contiguous.tif</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-130.574114</westBoundLongitude>
+          <eastBoundLongitude>-62.663099</eastBoundLongitude>
+          <southBoundLatitude>21.239728</southBoundLatitude>
+          <northBoundLatitude>52.580737</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-130.574114" miny="21.239728" maxx="-62.663099" maxy="52.580737"/>
+        <BoundingBox CRS="EPSG:4326" minx="21.239728" miny="-130.574114" maxx="52.580737" maxy="-62.663099"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:0_PublicLandSurveySystem</Name>
+        <Title>PLSS Intersected</Title>
+        <Abstract>PLSS Intersected is all of the PLSS feature at the atomic or smallest polygon level.&#13;
+&#13;
+This dataset represents the GIS Version of the Public Land Survey System including both rectangular and non-rectangular surveys. The primary source for the data is cadastral survey records housed by the BLM supplemented with local records and geographic control coordinates from states, counties as well as other federal agencies such as the USGS and USFS. The data has been converted from source documents to digital form and transferred into a GIS format that is compliant with FGDC Cadastral Data Content Standards and Guidelines for publication. This data is optimized for data publication and sharing rather than for specific "production" or operation and maintenance.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.080118</westBoundLongitude>
+          <eastBoundLongitude>179.419471</eastBoundLongitude>
+          <southBoundLatitude>24.556583</southBoundLatitude>
+          <northBoundLatitude>71.389885</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.080118" miny="24.556583" maxx="179.419471" maxy="71.389885"/>
+        <BoundingBox CRS="EPSG:4326" minx="24.556583" miny="-179.080118" maxx="71.389885" maxy="179.419471"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>mrdata:0_SGMC_Geology</Name>
+        <Title>SGMC_Geology</Title>
+        <Abstract>This data has been reprojected for faster display in web map services. The State Geologic Map Compilation (SGMC) geodatabase of the conterminous United States (https://doi.org/10.5066/F7WH2N65) represents a seamless, spatial database of 48 State geologic maps that range from 1:50,000 to 1:1,000,000 scale. A national digital geologic map database is essential in interpreting other datasets that support numerous types of national-scale studies and assessments, such as those that provide geochemistry, remote sensing, or geophysical data. The SGMC is a compilation of the individual U.S. Geological Survey releases of the Preliminary Integrated Geologic Map Databases for the United States. The SGMC geodatabase also contains updated data for seven States and seven entirely new State geologic maps that have been added since the preliminary databases were published. Numerous errors have been corrected and enhancements added to the preliminary datasets using thorough quality assurance/quality control procedures. The SGMC is not a truly integrated geologic map database because geologic units have not been reconciled across State boundaries. However, the geologic data contained in each State geologic map have been standardized to allow spatial analyses of lithology, age, and stratigraphy at a national scale. A full discussion of the procedures and methodology used to create this dataset is available in the accompanying report: Horton, J.D., San Juan, C.A., and Stoeser, D.B, 2017, The State Geologic Map Compilation (SGMC) geodatabase of the conterminous United States (ver. 1.1, August 2017): U.S. Geological Survey Data Series 1052, 46 p., https://doi.org/10.3133/ds1052.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-126.489856</westBoundLongitude>
+          <eastBoundLongitude>-66.742744</eastBoundLongitude>
+          <southBoundLatitude>24.276913</southBoundLatitude>
+          <northBoundLatitude>49.384527</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-126.489856" miny="24.276913" maxx="-66.742744" maxy="49.384527"/>
+        <BoundingBox CRS="EPSG:4326" minx="24.276913" miny="-126.489856" maxx="49.384527" maxy="-66.742744"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:0_SatelliteViewShadedRelief</Name>
+        <Title>ak.tif</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.999989</westBoundLongitude>
+          <eastBoundLongitude>179.999776</eastBoundLongitude>
+          <southBoundLatitude>43.245981</southBoundLatitude>
+          <northBoundLatitude>72.067449</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.999989" miny="43.245981" maxx="179.999776" maxy="72.067449"/>
+        <BoundingBox CRS="EPSG:4326" minx="43.245981" miny="-179.999989" maxx="72.067449" maxy="179.999776"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>mrdata:0_Soil Geochemistry site IDs</Name>
+        <Title>Soil Geochemistry site IDs</Title>
+        <Abstract>USGS Web Mapping Service:  Soil geochemical landscape</Abstract>
+        <KeywordList>
+          <Keyword>geochemistry</Keyword>
+          <Keyword>soil geochemistry</Keyword>
+          <Keyword>chemical analysis</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4267</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-125.0</westBoundLongitude>
+          <eastBoundLongitude>-66.9</eastBoundLongitude>
+          <southBoundLatitude>24.5</southBoundLatitude>
+          <northBoundLatitude>49.4</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-125.0" miny="24.5" maxx="-66.9" maxy="49.4"/>
+        <BoundingBox CRS="EPSG:4267" minx="24.4996" miny="-124.999" maxx="49.4002" maxy="-66.9005"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:0_TreeCanopy</Name>
+        <Title>contiguous.tif</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-130.573811</westBoundLongitude>
+          <eastBoundLongitude>-62.663871</eastBoundLongitude>
+          <southBoundLatitude>21.240374</southBoundLatitude>
+          <northBoundLatitude>52.580357</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-130.573811" miny="21.240374" maxx="-62.663871" maxy="52.580357"/>
+        <BoundingBox CRS="EPSG:4326" minx="21.240374" miny="-130.573811" maxx="52.580357" maxy="-62.663871"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:0_WatershedBoundaryDataset</Name>
+        <Title>14-digit HU</Title>
+        <Abstract>Abstract: This file contains Hydrologic Unit (HU) polygon boundaries for the United States, Puerto Rico, and the U.S. Virgin Islands. The data is a seamless National representation of HU boundaries from 2 to 14 digits compiled from U.S. Geological Survey (USGS) National Hydrography Dataset (NHD) and U.S. Department of Agriculture (USDA) National Resources Conservation Service (NRCS) Watershed Boundary Dataset (WBD) sources. Purpose: This data is intended primarily for geographic display and analysis of regional and national data, and can also be used for illustration purposes at intermediate or small scales (1:250,000 to 1:2,000,000).</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-150.397449</westBoundLongitude>
+          <eastBoundLongitude>-89.671677</eastBoundLongitude>
+          <southBoundLatitude>38.554147</southBoundLatitude>
+          <northBoundLatitude>61.518926</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-150.397449" miny="38.554147" maxx="-89.671677" maxy="61.518926"/>
+        <BoundingBox CRS="EPSG:4326" minx="38.554147" miny="-150.397449" maxx="61.518926" maxy="-89.671677"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>mrdata:1</Name>
+        <Title>namag_s</Title>
+        <Abstract>namag_s</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.999989</westBoundLongitude>
+          <eastBoundLongitude>179.999996</eastBoundLongitude>
+          <southBoundLatitude>4.744348</southBoundLatitude>
+          <northBoundLatitude>89.0</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.999989" miny="4.744348" maxx="179.999996" maxy="89.0"/>
+        <BoundingBox CRS="EPSG:4326" minx="4.744348" miny="-179.999989" maxx="89.0" maxy="179.999996"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:10_GovernmentalUnitBoundaries</Name>
+        <Title>National Cemetery</Title>
+        <Abstract>Boundaries of National Cemeteries administered by the U.S. Department of Veterans Affairs, National Cemetery Administration.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.150082</westBoundLongitude>
+          <eastBoundLongitude>179.775112</eastBoundLongitude>
+          <southBoundLatitude>-14.559753</southBoundLatitude>
+          <northBoundLatitude>71.214644</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.150082" miny="-14.559753" maxx="179.775112" maxy="71.214644"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.559753" miny="-179.150082" maxx="71.214644" maxy="179.775112"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:10_MapIndices</Name>
+        <Title>30x60 Minute (1:100K) labels</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-161.000014</westBoundLongitude>
+          <eastBoundLongitude>167.683236</eastBoundLongitude>
+          <southBoundLatitude>-78.749983</southBoundLatitude>
+          <northBoundLatitude>49.500009</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-161.000014" miny="-78.749983" maxx="167.683236" maxy="49.500009"/>
+        <BoundingBox CRS="EPSG:4326" minx="-78.749983" miny="-161.000014" maxx="49.500009" maxy="167.683236"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:10_NationalHydrographyDataset</Name>
+        <Title>Point</Title>
+        <Abstract>Abstract:&#13;
+The National Hydrography Dataset (NHD) is a feature-based database that interconnects and uniquely identifies the stream segments or reaches that make up the nation's surface water drainage system.  NHD data was originally developed at 1:100,000-scale and exists at that scale for the whole country. This high-resolution NHD, generally developed at 1:24,000/1:12,000 scale, adds detail to the original 1:100,000-scale NHD. (Data for Alaska, Puerto Rico and the Virgin Islands was developed at high-resolution, not 1:100,000 scale.) Local resolution NHD is being developed where partners and data exist. The NHD contains reach codes for networked features, flow direction, names, and centerline representations for areal water bodies. Reaches are also defined on waterbodies and the approximate shorelines of the Great Lakes, the Atlantic and Pacific Oceans and the Gulf of Mexico. The NHD also incorporates the National Spatial Data Infrastructure framework criteria established by the Federal Geographic Data Committee.  Use the metadata link, http://nhdgeo.usgs.gov/metadata/nhd_high.htm, for additional information.&#13;
+Purpose:&#13;
+The NHD is a national framework for assigning reach addresses to water-related entities, such as industrial discharges, drinking water supplies, fish habitat areas, wild and scenic rivers. Reach addresses establish the locations of these entities relative to one another within the NHD surface water drainage network, much like addresses on streets. Once linked to the NHD by their reach addresses, the upstream/downstream relationships of these water-related entities--and any associated information about them--can be analyzed using software tools ranging from spreadsheets to geographic information systems (GIS). GIS can also be used to combine NHD-based network analysis with other data layers, such as soils, land use and population, to help understand and display their respective effects upon one another. Furthermore, because the NHD provides a nationally consistent framework for addressing and analysis, water-related information linked to reach addresses by one organization (national, state, local) can be shared with other organizations and easily integrated into many different types of applications to the benefit of all.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-167.378534</westBoundLongitude>
+          <eastBoundLongitude>145.791213</eastBoundLongitude>
+          <southBoundLatitude>2.0E-6</southBoundLatitude>
+          <northBoundLatitude>70.68186</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-167.378534" miny="2.0E-6" maxx="145.791213" maxy="70.68186"/>
+        <BoundingBox CRS="EPSG:4326" minx="2.0E-6" miny="-167.378534" maxx="70.68186" maxy="145.791213"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:10_ReferencePolygons</Name>
+        <Title>Unincorporated Place Feature (Cities and Towns)</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-169.115498</westBoundLongitude>
+          <eastBoundLongitude>173.429921</eastBoundLongitude>
+          <southBoundLatitude>13.250302</southBoundLatitude>
+          <northBoundLatitude>70.570816</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-169.115498" miny="13.250302" maxx="173.429921" maxy="70.570816"/>
+        <BoundingBox CRS="EPSG:4326" minx="13.250302" miny="-169.115498" maxx="70.570816" maxy="173.429921"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:10_Structures</Name>
+        <Title>Prisons/Correctional Facilities</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-177.386037</westBoundLongitude>
+          <eastBoundLongitude>171.378442</eastBoundLongitude>
+          <southBoundLatitude>-14.343812</southBoundLatitude>
+          <northBoundLatitude>71.324768</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-177.386037" miny="-14.343812" maxx="171.378442" maxy="71.324768"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.343812" miny="-177.386037" maxx="71.324768" maxy="171.378442"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:10_Transportation</Name>
+        <Title>Secondary Highways</Title>
+        <Abstract>Secondary highways of the United States. These roads often have multiple lanes, higher speed limits, and may have on- and off-ramps.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-176.695767</westBoundLongitude>
+          <eastBoundLongitude>-64.566965</eastBoundLongitude>
+          <southBoundLatitude>17.676208</southBoundLatitude>
+          <northBoundLatitude>71.356693</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-176.695767" miny="17.676208" maxx="-64.566965" maxy="71.356693"/>
+        <BoundingBox CRS="EPSG:4326" minx="17.676208" miny="-176.695767" maxx="71.356693" maxy="-64.566965"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_Blank</Name>
+        <Title>World Country</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:3573</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.999989</westBoundLongitude>
+          <eastBoundLongitude>179.999989</eastBoundLongitude>
+          <southBoundLatitude>-89.0</southBoundLatitude>
+          <northBoundLatitude>83.604155</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.999989" miny="-89.0" maxx="179.999989" maxy="83.604155"/>
+        <BoundingBox CRS="EPSG:3573" minx="-1.2741524821797E7" miny="-1.2741524822111E7" maxx="1.2741524822032E7" maxy="1.2741524821928E7"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_GeographicNames</Name>
+        <Title>Wells</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-176.735016</westBoundLongitude>
+          <eastBoundLongitude>179.291652</eastBoundLongitude>
+          <southBoundLatitude>-14.35777</southBoundLatitude>
+          <northBoundLatitude>71.318889</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-176.735016" miny="-14.35777" maxx="179.291652" maxy="71.318889"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.35777" miny="-176.735016" maxx="71.318889" maxy="179.291652"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_GovernmentalUnitBoundaries</Name>
+        <Title>National Grassland</Title>
+        <Abstract>Areas designated as National Grasslands, owned or managed by U.S. Forest Service.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.150082</westBoundLongitude>
+          <eastBoundLongitude>179.775112</eastBoundLongitude>
+          <southBoundLatitude>-14.559753</southBoundLatitude>
+          <northBoundLatitude>71.214644</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.150082" miny="-14.559753" maxx="179.775112" maxy="71.214644"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.559753" miny="-179.150082" maxx="71.214644" maxy="179.775112"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_MapIndices</Name>
+        <Title>1x1 Degree labels</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.999989</westBoundLongitude>
+          <eastBoundLongitude>179.999989</eastBoundLongitude>
+          <southBoundLatitude>17.000002</southBoundLatitude>
+          <northBoundLatitude>72.0</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.999989" miny="17.000002" maxx="179.999989" maxy="72.0"/>
+        <BoundingBox CRS="EPSG:4326" minx="17.000002" miny="-179.999989" maxx="72.0" maxy="179.999989"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_ReferencePolygons</Name>
+        <Title>Incorporated Place Feature (Cities and Towns)</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-176.713098</westBoundLongitude>
+          <eastBoundLongitude>146.064819</eastBoundLongitude>
+          <southBoundLatitude>-14.41995</southBoundLatitude>
+          <northBoundLatitude>71.340257</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-176.713098" miny="-14.41995" maxx="146.064819" maxy="71.340257"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.41995" miny="-176.713098" maxx="71.340257" maxy="146.064819"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_Structures</Name>
+        <Title>Police Stations</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-177.386037</westBoundLongitude>
+          <eastBoundLongitude>171.378442</eastBoundLongitude>
+          <southBoundLatitude>-14.343812</southBoundLatitude>
+          <northBoundLatitude>71.324768</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-177.386037" miny="-14.343812" maxx="171.378442" maxy="71.324768"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.343812" miny="-177.386037" maxx="71.324768" maxy="171.378442"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:11_Transportation</Name>
+        <Title>Controlled-access Highways</Title>
+        <Abstract>Interstates and other primary highways of the United States. These roads have multiple lanes, high speed limits, and on- and off-ramps.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-176.695767</westBoundLongitude>
+          <eastBoundLongitude>-64.566965</eastBoundLongitude>
+          <southBoundLatitude>17.676208</southBoundLatitude>
+          <northBoundLatitude>71.356693</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-176.695767" miny="17.676208" maxx="-64.566965" maxy="71.356693"/>
+        <BoundingBox CRS="EPSG:4326" minx="17.676208" miny="-176.695767" maxx="71.356693" maxy="-64.566965"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:12_GeographicNames</Name>
+        <Title>Trailheads</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-176.735016</westBoundLongitude>
+          <eastBoundLongitude>179.291652</eastBoundLongitude>
+          <southBoundLatitude>-14.35777</southBoundLatitude>
+          <northBoundLatitude>71.318889</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-176.735016" miny="-14.35777" maxx="179.291652" maxy="71.318889"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.35777" miny="-176.735016" maxx="71.318889" maxy="179.291652"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:12_GovernmentalUnitBoundaries</Name>
+        <Title>Wildlife Reserve</Title>
+        <Abstract>Simplified boundaries of lands administered by the U.S. Fish and Wildlife Service including National Wildlife Refuges, National Fish Hatcheries, FWS administrative sites, and other conservation areas.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.150082</westBoundLongitude>
+          <eastBoundLongitude>179.775112</eastBoundLongitude>
+          <southBoundLatitude>-14.559753</southBoundLatitude>
+          <northBoundLatitude>71.214644</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.150082" miny="-14.559753" maxx="179.775112" maxy="71.214644"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.559753" miny="-179.150082" maxx="71.214644" maxy="179.775112"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:12_ReferencePolygons</Name>
+        <Title>County or Equivalent</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.231086</westBoundLongitude>
+          <eastBoundLongitude>179.859681</eastBoundLongitude>
+          <southBoundLatitude>-14.601813</southBoundLatitude>
+          <northBoundLatitude>71.441059</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.231086" miny="-14.601813" maxx="179.859681" maxy="71.441059"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.601813" miny="-179.231086" maxx="71.441059" maxy="179.859681"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:12_Transportation</Name>
+        <Title>Airport Runways</Title>
+        <Abstract>Runway outlines are for Federal Aviation Administration (FAA)-recognized public and private airports in the United States.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-177.392781</westBoundLongitude>
+          <eastBoundLongitude>174.135081</eastBoundLongitude>
+          <southBoundLatitude>-14.340702</southBoundLatitude>
+          <northBoundLatitude>71.285737</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-177.392781" miny="-14.340702" maxx="174.135081" maxy="71.285737"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.340702" miny="-177.392781" maxx="71.285737" maxy="174.135081"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:13_GeographicNames</Name>
+        <Title>Mines</Title>
+        <Abstract/>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-176.735016</westBoundLongitude>
+          <eastBoundLongitude>179.291652</eastBoundLongitude>
+          <southBoundLatitude>-14.35777</southBoundLatitude>
+          <northBoundLatitude>71.318889</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-176.735016" miny="-14.35777" maxx="179.291652" maxy="71.318889"/>
+        <BoundingBox CRS="EPSG:4326" minx="-14.35777" miny="-176.735016" maxx="71.318889" maxy="179.291652"/>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="1">
+        <Name>USGS:13_GovernmentalUnitBoundaries</Name>
+        <Title>National Wilderness</Title>
+        <Abstract>Lands designated as National Wilderness, owned or managed by U.S. Forest Service, U.S. Fish and Wildlife Service, National Park Service, and Bureau of Land Management.</Abstract>
+        <KeywordList/>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>-179.150082</westBoundLongitude>
+          <eastBoundLongitude>179.775112</eastBoundLongitude>
+          <southBoundLatitude>-14.559753</southBoundLatitude>
+          <northBoundLatitude>71.214644</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="-179.150082" miny="-14.559753" maxx="179.775112" maxy="71.214644"/>
+        <BoundingBox CRS="EPSG:4326" 
