@@ -21,6 +21,12 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
+    if (window.config === undefined) {
+        alert("Error loading layers. Refreshing page... ")
+        location.reload();
+        return false;
+    }
+
     // let date1 = dataAll.arrDate[0];
     let date1 = dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
@@ -31,6 +37,10 @@ requirejs([
         // covidPK([date1.Date, date2.Date], "Recoveries", "init");
         // covidPK([date1.Date, date2.Date], "Active Cases", "init");
 
+    } else {
+        alert("Error loading layers. Refreshing page... ")
+        location.reload();
+        return false;
     }
 
     let fromDateH = $('#fromdatepicker');
@@ -116,7 +126,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        console.log(newGlobe.layers);
+        // console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
@@ -490,8 +500,6 @@ requirejs([
 
             $(".input-NDWI, .input-NDMI, .input-SWIR, .input-NDVI, .input-MoistureIndex").change(function(){
                 let toggle = this;
-                console.log(this.value);
-                console.log(this.checked)
                 togglePK(toggle.value, toggle.checked);
                 // if (toggle.checked === true) {
                 //     document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
@@ -804,8 +812,9 @@ requirejs([
                 document.getElementById("diseasetrends-tab").style.pointerEvents = 'none';
                 document.getElementById("drawingtools-span").classList.remove("enabled-icon");
                 document.getElementById("diseasetrends-span").classList.remove("enabled-icon");
-                document.getElementById("drawingtools-span").classList.add("disabled-icon");
+                    document.getElementById("drawingtools-span").classList.add("disabled-icon");
                 document.getElementById("diseasetrends-span").classList.add("disabled-icon");
+                document.getElementById("charts").style.pointerEvents = 'none';
                 $( "#slider-range" ).slider( "disable" );
                 // document.getElementById("drawingtools-tab").style.visibility = 'hidden';
                 // document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
@@ -975,8 +984,6 @@ requirejs([
         //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
         // fromDateH.val(dataAll.arrDate[0].Date);
         fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
-        console.log(fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date));
-        console.log(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
         toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         // console.log(dataAll.arrDate[0].Date);
@@ -1015,7 +1022,7 @@ requirejs([
         toDateH.change(function () {
             controls.updateTo(toDateH.val());
         });
-        controls.initCaseNum();
+        // controls.initCaseNum();
         //load slider functionalities
         controls.dateSlider(fromDateH.val());
         // console.log("asdf: ")
@@ -1092,8 +1099,8 @@ requirejs([
         $("#categoryList").find("li").on("click", function (e) {
             alert("Please wait a few seconds for the placemarks and layers to load...");
             controls.onCategory(e);
-            $( "#slider-range" ).slider( "enable" );
-            document.getElementById("COVID-19-checkbox").checked = true;
+            // $( "#slider-range" ).slider( "enable" );
+            // document.getElementById("COVID-19-checkbox").checked = true;
         });
 
         //dropdown menu for continent selection

@@ -347,7 +347,7 @@
             <i class="fa fa-info" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a class="tablinksRight" id="charts" onclick="openTabRight(event, 'graphs')" style="position: fixed; right: 4%"
+        <a class="tablinksRight" id="charts" onclick="openTabRight(event, 'graphs')" style="position: fixed; right: 4%;
            title="Graphs">
             <i class="fa fa-bar-chart" aria-hidden="true"></i></a>
     </li>
@@ -1005,18 +1005,21 @@
         document.getElementById("drawingtools-span").classList.add("enabled-icon");
         document.getElementById("diseasetrends-span").classList.add("enabled-icon");
         document.getElementById("reset-span").classList.add("enabled-icon");
+        // document.getElementById("charts").style.pointerEvents = 'auto';
 
-        let click_event = new CustomEvent('click');
-        let btn_element = document.querySelector('#COVID-19-checkbox');
-        btn_element.dispatchEvent(click_event);
+        // let click_event = new CustomEvent('click');
+        // let btn_element = document.querySelector('#COVID-19-checkbox');
+        // btn_element.dispatchEvent(click_event);
+
         // $("#COVID-19-checkbox")[o].click();
         // document.getElementById("controls-tab").style.pointerEvents = 'auto';
         // document.getElementById("reset-tab").style.pointerEvents = 'auto';
         // document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
         // document.getElementById("diseasetrends-tab").style.pointerEvents = 'auto';
-        // openTabLeft(event, 'options_div');
+        openTabLeft(event, 'options_div');
+        document.getElementById("COVID-19-checkbox").checked = true;
 
-        // $( "#slider-range" ).slider( "enable" );
+        $( "#slider-range" ).slider("enable");
     }
 
     function onFunction() {
