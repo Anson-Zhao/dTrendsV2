@@ -1068,11 +1068,13 @@ requirejs([
         });
 
         //enables all covid placemarks
+        //edit here
         $('#refresh').click(function () {
             controls.enableAllCovid();
         });
 
         //disables all covid placemarks
+        //edit here
         $('#clear').click(function () {
             controls.closeAllCovid();
         });
@@ -1106,6 +1108,7 @@ requirejs([
         //dropdown menu for continent selection
         $("#continentList").find("li").on("click", function (e) {
             controls.onContinent(e);
+            console.log(e)
         });
 
         //timelapse: start button
