@@ -1218,7 +1218,8 @@ define([
         // console.log(fromDate.val());
 
         $("#slider-range").slider({
-            min: new Date(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date).getTime() / 1000 + 86400,
+            // min: new Date(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date).getTime() / 1000 + 86400,
+            min: new Date(dataAll.arrDate[0].Date).getTime() / 1000 + 86400,
             max: new Date(dataAll.arrDate[dataAll.arrDate.length - 1].Date).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(sd).getTime() / 1000 + 86400,
@@ -1303,7 +1304,8 @@ define([
     //overrides user changes in filter option dialog box; sets date range to max range, continents to all
     let fullLoad = function () {
         if ($('input#fullLoad').is(':checked')) {
-            $('.filterFrom').val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
+            //$('.filterFrom').val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
+            $('.filterFrom').val(dataAll.arrDate[0].Date);
             $('.filterTo').val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
             $('.filterFrom, .filterTo').css('background-color', 'lightgray');
             $('.filterFrom, .filterTo').prop('disabled', true);
@@ -2152,6 +2154,7 @@ define([
         // }
         // layerManager.synchronizeLayerList();
 
+        let continentVal = document.getElementById("continentList").innerHTML || document.getElementById("continentList").innerText;
         await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
                 if (elem.layerType == "H_PKLayer") {
@@ -2176,6 +2179,48 @@ define([
                 layerManager.synchronizeLayerList();
             }
         })
+
+        // await newGlobe.layers.forEach(function (elem, index) {
+        //     if (elem instanceof WorldWind.RenderableLayer) {
+        //         if (elem.continent !== continentVal && elem.layerType == "H_PKLayer") {
+        //             if (continentVal == 'All Continents' || continentVal == 'Please Select Continent') {
+        //                 elem.hide = false;
+        //                 elem.enabled = true;
+        //                 let layerButton = $('#' + elem.displayName + '');
+        //                 if (!layerButton.hasClass(active)) {
+        //                     layerButton.addClass(active);
+        //                     layerButton.css("color", "white");
+        //                 }
+        //             } else {
+        //                 elem.hide = true;
+        //                 elem.enabled = false;
+        //             }
+        //         // } else if (elem.continent == continentVal && elem.layerType == "H_PKLayer") {
+        //         } else if (elem.continent == continentVal && elem.layerType == "H_PKLayer") {
+        //             elem.hide = false;
+        //             elem.enabled = true;
+        //             let layerButton = $('#' + elem.displayName + '');
+        //             if (!layerButton.hasClass(active)) {
+        //                 layerButton.addClass(active);
+        //                 layerButton.css("color", "white");
+        //             }
+        //         }
+        //     }
+        //
+        //     // refreshed the menu buttoms
+        //     if (index === newGlobe.layers.length - 1) {
+        //         //navigate the globe to the continent
+        //         letLong.some(function (c) {
+        //             if (c.cont == continentVal) {
+        //                 newGlobe.goTo(new WorldWind.Position(c.lat, c.long, 12000000));
+        //                 return true
+        //             }
+        //         })
+        //
+        //         layerManager.synchronizeLayerList();
+        //
+        //     }
+        // })
     }
 
     //disables all layers; if layer is enabled, force disable it

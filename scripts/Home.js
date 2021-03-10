@@ -39,6 +39,7 @@ requirejs([
 
     } else {
         alert("Error loading layers. Refreshing page... ")
+        coviderror = true;
         location.reload();
         return false;
     }
@@ -126,7 +127,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        // console.log(newGlobe.layers);
+        console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
@@ -135,15 +136,6 @@ requirejs([
                 'If you are experiencing any problems, ' +
                 'please try switching a browser or watching the tutorial.');
             localStorage.setItem('namespace.visited', 1)
-        }
-
-        if (date1 === undefined || date2 === undefined) {
-            alert("Error! Some COVID data wasn't loaded! Functionality may be unavailable.");
-            coviderror = true;
-            // document.getElementById("dialog").hidden = true;
-            // document.getElementById("dialog").style.display = "none";
-            // document.getElementById("dialogDateRange").hidden = true;
-            // document.getElementById("dialogDateRange").style.display = "none";
         }
 
         // if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
@@ -777,8 +769,8 @@ requirejs([
         $("#COVID-19-checkbox").on("click", function (e) {
             // controls.covid19();
             // console.log(fromDateH.val())
-            // fromDateH.val(dataAll.arrDate[0].Date);
-            fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
+            fromDateH.val(dataAll.arrDate[0].Date);
+            // fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
             // console.log(fromDateH.val());
             // let toggle = this;
             if (this.checked && coviderror !== true) {
@@ -804,6 +796,10 @@ requirejs([
                 alert("COVID placemarks & layers are currently unavailable. ")
                 document.getElementById("COVID-19-checkbox").disabled = true;
                 this.checked = false;
+                alert("Error loading layers. Refreshing page... ")
+                coviderror = true;
+                location.reload();
+                return false;
             } else {
                 document.getElementById("COVID-category").disabled = true;
 
@@ -986,8 +982,6 @@ requirejs([
         fromDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date);
         toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        // console.log(dataAll.arrDate[0].Date);
-        // console.log(fromDateH.val());
 
         // //when user changes the date, globe will redraw to show the placemarks of current day
         // curDate.change(function () {
@@ -1024,7 +1018,7 @@ requirejs([
         });
         // controls.initCaseNum();
         //load slider functionalities
-        controls.dateSlider(fromDateH.val());
+        controls.dateSlider(curDateH.val());
         // console.log("asdf: ")
 
         // console.log($.format.date(new Date(toDateH.val()).getTime(), "yyyy-MM-dd"))
@@ -1047,16 +1041,22 @@ requirejs([
         controls.subDropdown();
 
         //sets date picker format; disables all dates without data available
+        //check here
         if (coviderror !== true) {
             flatpickr(".date", {
                 defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
-                // minDate: dataAll.arrDate[0].Date,
-                minDate:  dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date,
+                minDate: dataAll.arrDate[0].Date,
+                // minDate:  dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength].Date,
                 maxDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
                 inline: false,
                 dateFormat: "Y-m-d",
                 time_24hr: true
             });
+        } else {
+            alert("Error loading layers. Refreshing page... ")
+            coviderror = true;
+            location.reload();
+            return false;
         }
 
         $("#popover").popover({html: true, placement: "top", trigger: "hover"});
