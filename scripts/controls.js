@@ -64,6 +64,15 @@ define([
     let numA = 0;
 
     let speed = false;
+    let letLong = [
+        {cont: 'North America', lat: 40.7306, long: -73.9352},
+        {cont: 'South America', lat: -14.235, long: -51.9253},
+        {cont: 'Asia', lat: 30.9756, long: 112.2707},
+        {cont: 'Europe', lat: 51, long: 9},
+        {cont: 'Africa', lat: 9.082, long: 8.6753},
+        {cont: 'Oceania', lat: -37.8136, long: 144.9631},
+        {cont: 'All Continents', lat: 30.9756, long: 112.2707}
+    ];
     // console.log(newGlobe.layers)
     //under initial load for case numbers
     let initCaseNum = function () {
@@ -921,7 +930,6 @@ define([
     };
 
     //under second left tab, third dropdown menu; used to display all countries/layers in that continent
-    //edit here
     let onContinent = async function (event) {
         //grab the continent value when selected by user.
         let continentS = event.target.innerText || event.target.innerHTML;
@@ -933,15 +941,15 @@ define([
         //refresh the option display
         $("#continentList").find("button").html(continentS + ' <span class="caret"></span>');
 
-        let letLong = [
-            {cont: 'North America', lat: 40.7306, long: -73.9352},
-            {cont: 'South America', lat: -14.235, long: -51.9253},
-            {cont: 'Asia', lat: 30.9756, long: 112.2707},
-            {cont: 'Europe', lat: 51, long: 9},
-            {cont: 'Africa', lat: 9.082, long: 8.6753},
-            {cont: 'Oceania', lat: -37.8136, long: 144.9631},
-            {cont: 'All Continents', lat: 30.9756, long: 112.2707}
-        ];
+        // let letLong = [
+        //     {cont: 'North America', lat: 40.7306, long: -73.9352},
+        //     {cont: 'South America', lat: -14.235, long: -51.9253},
+        //     {cont: 'Asia', lat: 30.9756, long: 112.2707},
+        //     {cont: 'Europe', lat: 51, long: 9},
+        //     {cont: 'Africa', lat: 9.082, long: 8.6753},
+        //     {cont: 'Oceania', lat: -37.8136, long: 144.9631},
+        //     {cont: 'All Continents', lat: 30.9756, long: 112.2707}
+        // ];
 
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         await newGlobe.layers.forEach(function (elem, index) {
@@ -2119,6 +2127,7 @@ define([
             }
             if (index === newGlobe.layers.length - 1) {
                 newGlobe.redraw()
+                layerManager.synchronizeLayerList();
             }
         });
 
@@ -2129,33 +2138,74 @@ define([
     }
 
     //enables all layers; if layer is disabled, force enable it
-    function enableAllCovid() {
-        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
-            let layer = newGlobe.layers[i];
-            if (layer.layerType === 'H_PKLayer') {
-                layer.enabled = true;
-                let layerButton = $('#' + layer.displayName + '');
-                if (!layerButton.hasClass(active)) {
-                    layerButton.addClass(active);
-                    layerButton.css("color", "white");
+    let enableAllCovid = async function(){
+        // for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
+        //     let layer = newGlobe.layers[i];
+        //     if (layer.layerType === 'H_PKLayer') {
+        //         layer.enabled = true;
+        //         let layerButton = $('#' + layer.displayName + '');
+        //         if (!layerButton.hasClass(active)) {
+        //             layerButton.addClass(active);
+        //             layerButton.css("color", "white");
+        //         }
+        //     }
+        // }
+        // layerManager.synchronizeLayerList();
+
+        await newGlobe.layers.forEach(function (elem, index) {
+            if (elem instanceof WorldWind.RenderableLayer) {
+                if (elem.layerType == "H_PKLayer") {
+                    elem.hide = false;
+                    elem.enabled = true;
+                    let layerButton = $('#' + elem.displayName + '');
+                    if (!layerButton.hasClass(active)) {
+                        layerButton.addClass(active);
+                        layerButton.css("color", "white");
+                    }
                 }
             }
-        }
+
+            // refreshed the menu buttoms
+            if (index === newGlobe.layers.length - 1) {
+                //navigate the globe to the continent
+                letLong.some(function (c) {
+                        newGlobe.goTo(new WorldWind.Position(30.9756, 112.2707, 12000000));
+                        return true
+                })
+
+                layerManager.synchronizeLayerList();
+            }
+        })
     }
 
     //disables all layers; if layer is enabled, force disable it
-    function closeAllCovid() {
-        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
-            let layer = newGlobe.layers[i];
-            if (layer.layerType === 'H_PKLayer') {
-                layer.enabled = false;
-                let layerButton = $('#' + layer.displayName + '');
-                if (layerButton.hasClass(active)) {
-                    layerButton.removeClass(active);
-                    layerButton.css("color", "black");
+    let closeAllCovid = async function() {
+        // for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
+        //     let layer = newGlobe.layers[i];
+        //     if (layer.layerType === 'H_PKLayer') {
+        //         layer.enabled = false;
+        //         let layerButton = $('#' + layer.displayName + '');
+        //         if (layerButton.hasClass(active)) {
+        //             layerButton.removeClass(active);
+        //             layerButton.css("color", "black");
+        //         }
+        //     }
+        // }
+
+
+        await newGlobe.layers.forEach(function (elem, index) {
+            if (elem instanceof WorldWind.RenderableLayer) {
+                if (elem.layerType == "H_PKLayer") {
+                    elem.hide = true;
+                    elem.enabled = false;
+                    let layerButton = $('#' + elem.displayName + '');
+                    if (layerButton.hasClass(active)) {
+                        layerButton.removeClass(active);
+                        layerButton.css("color", "black");
+                    }
                 }
             }
-        }
+        })
     }
 
     return {
