@@ -103,7 +103,7 @@ let clientConfig = {
         radius: 4.3,
         incrementPerIntensity: 0.2
     },
-    initLength: 90
+    initLength: 40
 };
 
 

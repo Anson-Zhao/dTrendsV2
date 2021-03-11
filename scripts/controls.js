@@ -73,38 +73,42 @@ define([
         {cont: 'Oceania', lat: -37.8136, long: 144.9631},
         {cont: 'All Continents', lat: 30.9756, long: 112.2707}
     ];
+    let PkStartDate = dataAll.arrDate[dataAll.arrDate.length - 1 - window.config.initLength];
+    let PkMidDate = dataAll.arrDate[Math.round(((dataAll.arrDate.length - 1 - window.config.initLength) + (dataAll.arrDate.length - 1))/2)];
+    let PkEndDate = dataAll.arrDate[dataAll.arrDate.length - 1];
+
     // console.log(newGlobe.layers)
     //under initial load for case numbers
-    let initCaseNum = function () {
-        // newGlobe.layers.forEach(function (elem, index) {
-        //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
-        //         elem.renderables.forEach(function (d) {
-        //             if (d instanceof WorldWind.Placemark) {
-        //                 if (d.userProperties.Date == curDate.val()) {
-        //                     if (d.userProperties.Type == "Confirmed Cases") {
-        //                         numC += d.userProperties.Number;
-        //                     } else if (d.userProperties.Type == "Deaths") {
-        //                         numD += d.userProperties.Number;
-        //                     } else if (d.userProperties.Type == "Recoveries") {
-        //                         numR += d.userProperties.Number;
-        //                     } else if (d.userProperties.Type == "Active Cases") {
-        //                         numA += d.userProperties.Number;
-        //                     }
-        //                 }
-        //             }
-        //         });
-        //     }
-        //     if (index == newGlobe.layers.length - 1) {
-        //         newGlobe.redraw()
-        //     }
-        // });
-        updateCOVID("Confirmed Cases", curDate.val())
-
-        // $('#conConfirmed').text(numC);
-        // $('#conDeaths').text(numD);
-        // $('#conRecoveries').text(numR);
-        // $('#conActive').text(numA);
-    }
+    // let initCaseNum = function () {
+    //     // newGlobe.layers.forEach(function (elem, index) {
+    //     //     if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+    //     //         elem.renderables.forEach(function (d) {
+    //     //             if (d instanceof WorldWind.Placemark) {
+    //     //                 if (d.userProperties.Date == curDate.val()) {
+    //     //                     if (d.userProperties.Type == "Confirmed Cases") {
+    //     //                         numC += d.userProperties.Number;
+    //     //                     } else if (d.userProperties.Type == "Deaths") {
+    //     //                         numD += d.userProperties.Number;
+    //     //                     } else if (d.userProperties.Type == "Recoveries") {
+    //     //                         numR += d.userProperties.Number;
+    //     //                     } else if (d.userProperties.Type == "Active Cases") {
+    //     //                         numA += d.userProperties.Number;
+    //     //                     }
+    //     //                 }
+    //     //             }
+    //     //         });
+    //     //     }
+    //     //     if (index == newGlobe.layers.length - 1) {
+    //     //         newGlobe.redraw()
+    //     //     }
+    //     // });
+    //     updateCOVID("Confirmed Cases", curDate.val())
+    //
+    //     // $('#conConfirmed').text(numC);
+    //     // $('#conDeaths').text(numD);
+    //     // $('#conRecoveries').text(numR);
+    //     // $('#conActive').text(numA);
+    // }
 
     //overlays sub dropdown menus over other items
     let subDropdown = function () {
@@ -938,6 +942,9 @@ define([
         let findWeatherIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Weather_Station_PK');
         let weather_status = newGlobe.layers[findWeatherIndex].enabled
 
+        //remove underscore
+        let continentNOspace = continentS.split(' ').join('_');
+
         //refresh the option display
         $("#continentList").find("button").html(continentS + ' <span class="caret"></span>');
 
@@ -954,7 +961,11 @@ define([
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
-                if (elem.continent !== continentS && elem.layerType == "H_PKLayer") {
+                let cont = String(elem.continent).trim();
+                // let cont = elem.continent;
+                if (cont != continentS && elem.layerType == "H_PKLayer") {
+                    console.log("this continent is not equal to the button value: " + elem.continent)
+                    console.log("button value: " + continentS)
                     if (continentS == 'All Continents') {
                         elem.hide = false;
                         elem.enabled = true;
@@ -962,7 +973,8 @@ define([
                         elem.hide = true;
                         elem.enabled = false;
                     }
-                } else {
+                } else if (elem.continent === continentNOspace && elem.layerType == "H_PKLayer" || elem.continent === continentS && elem.layerType == "H_PKLayer") {
+                    console.log("equal continent" + elem.continent)
                     elem.hide = false;
                     elem.enabled = true;
                 }
@@ -1077,6 +1089,12 @@ define([
         let sortLayers = [];
 
         if (Dd !== "none") {
+
+            if (Dd == PkMidDate.Date) {
+                // covidPK([date1.Date, date2.Date], "Confirmed", "init");
+            }
+
+
             //enables placemark based on the placemark properties current date and type
             await newGlobe.layers.forEach(function (elem, index) {
                 if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
@@ -2254,7 +2272,7 @@ define([
     }
 
     return {
-        initCaseNum,
+        // initCaseNum,
         subDropdown,
         updateFrom,
         updateTo,

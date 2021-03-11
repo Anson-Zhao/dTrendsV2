@@ -4,7 +4,7 @@ define([
     './imgPKobject',
     './jquery-csv-1.0.11'
     // ,'./initPL'
-], function (newGlobe, canvasPKobject, imagePK) {
+], function (newGlobe, canvasPKobject) {
     "use strict";
 
     let pLayer;
@@ -16,7 +16,6 @@ define([
         // generatePlacemarkLayer(csvdata);
 
         if (countries === null && continents == null) {
-            console.log('hi!')
         }
 
         // request the data for placemarks with given date and country
@@ -42,6 +41,8 @@ define([
                             pLayer.enabled = true;
                             pLayer.layerType = 'H_PKLayer';
                             pLayer.continent = el.ContinentName;
+                            console.log(el.CountryName)
+                            console.log(el.ContinentName)
                         }
 
                         //define colors for the placemarks
